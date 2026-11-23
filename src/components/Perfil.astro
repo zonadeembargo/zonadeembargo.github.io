@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import { SITE, CATEGORIAS, u } from '../config';
+const textos = await getCollection('textos', ({ data }) => !data.rascunho);
+const total = textos.length;
+const maior = Math.max(1, ...Object.keys(CATEGORIAS).map((k) => textos.filter((t) => t.data.categoria === k).length));
+const ultima = textos.map((t) => (t.data.atualizado ?? t.data.data).valueOf()).sort((a, b) => b - a)[0];
+const ultimaBR = ultima ? new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC' }).format(new Date(ultima)) : '—';
+---
+<aside class="placa perfil" aria-label="Sobre o autor">
+  <div class="perfil__avatar"><img src={u('mascote/avatar.webp')} alt="Ilustração do autor em estilo anime, de farda verde, óculos e expressão cansada" width="512" height="512" /></div>
+  {SITE.apoio && <a class="btn btn--sec btn--bloco" href={SITE.apoio}>Apoiar</a>}
+  <dl class="dados">
+    <div><dt>NOME</dt><dd>{SITE.nome.split(' ')[0]}</dd></div>
+    <div><dt>FOCO</dt><dd>{SITE.perfil.foco}</dd></div>
+    <div><dt>BASE</dt><dd>{SITE.perfil.base}</dd></div>
+    <div><dt>ACESSO</dt><dd>{SITE.perfil.acesso}</dd></div>
+    <div><dt>TEXTOS</dt><dd>{total}</dd></div>
+    <div><dt>ATUALIZADO</dt><dd>{ultimaBR}</dd></div>
+  </dl>
+  <div class="telemetria">
+    <h2>TEXTOS POR TEMA</h2>
+    <ul>
+      {Object.entries(CATEGORIAS).map(([k, c]) => {
+        const n = textos.filter((t) => t.data.categoria === k).length;
+        return (<li class={c.cor}><a href={u(`categoria/${k}/`)} style="color:var(--texto);text-decoration:none">{c.rotulo}</a><span class="b" aria-hidden="true"><i style={`width:${(n / maior) * 100}%`}></i></span><span>{n}</span></li>);
+      })}
+    </ul>
+  </div>
+</aside>

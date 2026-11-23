@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SECOES, u } from '../config';
+const itens = (await getCollection('ferramentas', ({ data }) => !data.rascunho)).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'pt-BR'));
+---
+<Base titulo={`${SECOES.ferramentas.rotulo} (${SECOES.ferramentas.sub})`} descricao="Plugins, scripts e ferramentas livres.">
+  <div class="wrap">
+    <span class="rotulo-sub">{SECOES.ferramentas.sub}</span>
+    <h1 class="titulo-pagina">{SECOES.ferramentas.rotulo}</h1>
+    <p class="sub">Plugins, scripts e modelos de uso livre. Baixe, use, adapte e compartilhe.</p>
+    {itens.length ? (
+      <div class="grade-itens">
+        {itens.map((i) => (
+          <article class="placa item">
+            <div class="tags"><span class="tag tag--ciano">[{i.data.tipo.toUpperCase()}]</span><span class="tag tag--oliva">{i.data.licenca}</span>{i.data.versao && <span class="tag tag--laranja">v{i.data.versao}</span>}</div>
+            <h3>{i.data.nome}</h3>
+            <p>{i.data.resumo}</p>
+            <a class="btn btn--sec" href={i.data.url}>Baixar / acessar</a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="placa vazio"><img src={u('mascote/mascote-pesquisador-400.webp')} alt="" /><p>Nenhuma ferramenta cadastrada ainda.</p></div>
+    )}
+    <p class="aviso">Material de uso restrito a uma instituição fica em outra página: <a href={u(SECOES.institucional.href)}>{SECOES.institucional.rotulo} ({SECOES.institucional.sub})</a>.</p>
+  </div>
+</Base>

@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+import { CATEGORIAS, SECOES, u } from '../../config';
+const todos = (await getCollection('textos', ({ data }) => !data.rascunho || import.meta.env.DEV))
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+---
+<Base titulo={`${SECOES.textos.rotulo} (${SECOES.textos.sub})`} descricao="Todos os textos publicados.">
+  <div class="wrap">
+    <span class="rotulo-sub">{SECOES.textos.sub}</span>
+    <h1 class="titulo-pagina">{SECOES.textos.rotulo}</h1>
+    <p class="sub">Tudo o que foi publicado, do mais recente ao mais antigo.</p>
+    <nav class="chips" aria-label="Temas">
+      <a href={u('textos/')} aria-current="page">TODOS</a>
+      {Object.entries(CATEGORIAS).map(([k, c]) => <a href={u(`categoria/${k}/`)}>{c.rotulo}</a>)}
+    </nav>
+    <div class="lista" style="margin-top:1.4rem">
+      {todos.map((t) => <Card entry={t} />)}
+    </div>
+  </div>
+</Base>

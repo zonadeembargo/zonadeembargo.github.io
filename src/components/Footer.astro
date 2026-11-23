@@ -1,0 +1,21 @@
+---
+import { SITE, SECOES, u } from '../config';
+---
+<footer class="rodape">
+  <div class="wrap">
+    <div>
+      <p>{SITE.aviso}</p>
+      <p>
+        <strong>Textos, mapas, dados e imagens de conteúdo:</strong> <a href={SITE.licencaUrl} rel="license">{SITE.licenca}</a>.
+        <strong>Código do site:</strong> <a href={SITE.licencaCodigoUrl}>{SITE.licencaCodigo}</a>.
+        <strong>Logo e mascote:</strong> todos os direitos reservados. Ilustrações geradas com auxílio de IA.
+      </p>
+    </div>
+    <nav aria-label="Rodapé">
+      <a href={u('rss.xml')}>RSS</a>
+      {SITE.substack && <a href={SITE.substack}>Substack</a>}
+      <a href={u(SECOES.licencas.href)}>{SECOES.licencas.rotulo}<small>{SECOES.licencas.sub}</small></a>
+      <a href={u(SECOES.institucional.href)}>{SECOES.institucional.rotulo}<small>{SECOES.institucional.sub}</small></a>
+    </nav>
+  </div>
+</footer>

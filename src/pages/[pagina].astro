@@ -1,0 +1,22 @@
+---
+// Páginas simples escritas em Markdown: src/content/paginas/<nome>.md  ->  /<nome>/
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const todas = await getCollection('paginas');
+  return todas.map((entry) => ({ params: { pagina: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Base titulo={entry.data.sub ? `${entry.data.titulo} (${entry.data.sub})` : entry.data.titulo}>
+  <div class="wrap">
+    <article class="artigo">
+      <header>
+        {entry.data.sub && <span class="rotulo-sub" style="margin-top:0">{entry.data.sub}</span>}
+        <h1>{entry.data.titulo}</h1>
+      </header>
+      <div class="prosa"><Content /></div>
+    </article>
+  </div>
+</Base>

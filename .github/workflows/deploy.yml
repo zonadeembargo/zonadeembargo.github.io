@@ -1,0 +1,38 @@
+name: Publicar site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Definir endereço do site
+        run: |
+          REPO="${GITHUB_REPOSITORY#*/}"
+          DONO="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr 'A-Z' 'a-z')"
+          if [ -n "${{ vars.SITE_URL }}" ]; then          # domínio próprio
+            echo "SITE=${{ vars.SITE_URL }}" >> "$GITHUB_ENV"; echo "BASE=/" >> "$GITHUB_ENV"
+          elif [ "$REPO" = "${DONO}.github.io" ]; then     # repositório usuario.github.io
+            echo "SITE=https://${DONO}.github.io" >> "$GITHUB_ENV"; echo "BASE=/" >> "$GITHUB_ENV"
+          else                                              # repositório comum
+            echo "SITE=https://${DONO}.github.io" >> "$GITHUB_ENV"; echo "BASE=/${REPO}" >> "$GITHUB_ENV"
+          fi
+      - uses: withastro/action@v3
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

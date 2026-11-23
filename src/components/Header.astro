@@ -1,0 +1,22 @@
+---
+import { SITE, NAV, u } from '../config';
+const atual = Astro.url.pathname;
+const ativo = (href: string) => (href === '' ? atual === u() : atual.startsWith(u(href)));
+---
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href={u()} aria-label={`${SITE.nome} — página inicial`}>
+      <img src={u('logo.svg')} alt="" width="60" height="60" />
+      <span>
+        <span class="marca__nome">{SITE.nome}</span>
+        <span class="marca__proj">{SITE.projeto}</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      {NAV.map((i) => (
+        <a href={u(i.href)} aria-current={ativo(i.href) ? 'page' : undefined}>{i.rotulo}<small>{i.sub}</small></a>
+      ))}
+    </nav>
+  </div>
+  <div class="barras" aria-hidden="true"><i></i><i></i></div>
+</header>

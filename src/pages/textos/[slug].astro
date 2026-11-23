@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import { SITE, CATEGORIAS, u, dataBR } from '../../config';
+
+export async function getStaticPaths() {
+  const todos = await getCollection('textos', ({ data }) => !data.rascunho || import.meta.env.DEV);
+  return todos.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const cat = CATEGORIAS[d.categoria as keyof typeof CATEGORIAS];
+const { Content } = await render(entry);
+const canonico = new URL(u(`textos/${entry.id}/`), Astro.site).href;
+const minutos = Math.max(1, Math.round((entry.body ?? '').split(/\s+/).length / 200));
+---
+<Base titulo={d.titulo} descricao={d.resumo} semIndexar={d.rascunho}>
+  <div class="wrap">
+    <article class="artigo">
+      <header>
+        {d.rascunho && <p class="aviso">RASCUNHO — visível apenas no seu computador. Troque <code>rascunho: true</code> por <code>false</code> para publicar.</p>}
+        <a class={`tag tag--${cat.cor}`} href={u(`categoria/${d.categoria}/`)}>[{cat.rotulo}]</a>
+        <h1>{d.titulo}</h1>
+        <p class="meta">
+          <time datetime={d.data.toISOString()}>{dataBR(d.data)}</time>
+          {d.atualizado && <> · atualizado em {dataBR(d.atualizado)}</>}
+          · {minutos} min de leitura
+        </p>
+      </header>
+      {d.capa && <Image src={d.capa} alt="" widths={[760, 1520]} sizes="760px" style="margin-bottom:1.5rem;border:1px solid var(--linha)" />}
+      <div class="prosa"><Content /></div>
+      <footer class="fim">
+        <img src={u('mascote/mascote-guia-400.webp')} alt="" loading="lazy" />
+        <p>Fim do texto. Licença <a href={SITE.licencaUrl} rel="license">{SITE.licenca}</a>: pode copiar, adaptar e redistribuir, citando a fonte e mantendo a mesma licença.
+          <span class="canonico">Publicado originalmente em <a href={canonico}>{canonico}</a></span>
+          {d.substack && <span class="canonico">Também no Substack: <a href={d.substack}>{d.substack}</a></span>}
+          <a href={u('textos/')}>← Voltar aos textos</a></p>
+      </footer>
+    </article>
+  </div>
+</Base>

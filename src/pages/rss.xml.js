@@ -1,0 +1,21 @@
+import rss from '@astrojs/rss';
+import { getCollection } from 'astro:content';
+import { SITE } from '../config';
+
+export async function GET(context) {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const textos = (await getCollection('textos', ({ data }) => !data.rascunho))
+    .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+  return rss({
+    title: `${SITE.nome} · ${SITE.projeto}`,
+    description: SITE.descricao,
+    site: context.site,
+    items: textos.map((t) => ({
+      title: t.data.titulo,
+      pubDate: t.data.data,
+      description: t.data.resumo,
+      link: `${base}/textos/${t.id}/`,
+    })),
+    customData: '<language>pt-br</language>',
+  });
+}

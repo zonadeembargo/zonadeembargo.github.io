@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Foice e martelo sobre engrenagem">
+  <g fill="#b3261e">
+    <path fill-rule="evenodd" d="M50 4l6 .5 3 9.5 7 2.8 8.7-4.7 8.6 7.4-4 9.2 3.6 6.6 9.6 1.4 1.6 11.2-8.6 5 -1 7.6 7 7.2-5.8 9.6-9.8-2.4-5.6 5 .4 10-10.8 3.6-6.2-8.2h-7.2l-6.2 8.2-10.8-3.6.4-10-5.6-5-9.8 2.4-5.8-9.6 7-7.2-1-7.6-8.6-5 1.6-11.2 9.6-1.4 3.6-6.6-4-9.2 8.6-7.4 8.7 4.7 7-2.8 3-9.5z M50 20a30 30 0 1 0 .01 0z"/>
+  </g>
+  <circle cx="50" cy="50" r="30.5" fill="#121415"/>
+  <g fill="#d9d9d9" stroke="none">
+    <!-- martelo: cabo + cabeça -->
+    <path d="M31 70 L63 38 L67 42 L35 74 Z"/>
+    <path d="M58 27 L72 41 L66 47 L52 33 Z"/>
+    <!-- foice: lâmina em crescente + cabo -->
+    <path d="M33 43 C33 31 44 24 56 27 C47 29 41 35 41 43 C41 52 47 59 56 61 C57 62 57 63 56 64 C43 63 33 55 33 43 Z"/>
+    <path d="M52 63 L66 72 L63 76 L49 67 Z"/>
+  </g>
+</svg>

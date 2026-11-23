@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import Perfil from '../components/Perfil.astro';
+import { getCollection } from 'astro:content';
+import { SITE, CATEGORIAS, u } from '../config';
+
+const todos = (await getCollection('textos', ({ data }) => !data.rascunho))
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+const destaque = todos[0];
+const recentes = todos.slice(1, 7);
+const cat = destaque ? CATEGORIAS[destaque.data.categoria as keyof typeof CATEGORIAS] : null;
+---
+<Base>
+  <div class="wrap grade">
+    <div>
+      <section class="hero" aria-label="Destaque">
+        <img class="hero__img" src={u('img/hero.webp')} alt="Ilustração: agente de farda verde em meio a ruínas tomadas pela mata, com mapas holográficos, um drone de monitoramento e uma bandeira do Brasil manchada de sangue ao fundo" width="2400" height="741" fetchpriority="high" />
+        <div class="hero__txt">
+          {destaque ? (
+            <>
+              <div class="hero__kicker">Texto em destaque · <span>{cat?.rotulo}</span></div>
+              <h1><a href={u(`textos/${destaque.id}/`)}>{destaque.data.titulo}</a></h1>
+              <p>{destaque.data.resumo}</p>
+            </>
+          ) : (
+            <>
+              <div class="hero__kicker">{SITE.projeto}</div>
+              <h1>{SITE.nome}</h1>
+              <p>{SITE.slogan}</p>
+            </>
+          )}
+          <div class="hero__acoes">
+            {destaque && <a class="btn" href={u(`textos/${destaque.id}/`)}>Ler texto</a>}
+            {SITE.substack && <a class="btn btn--sec" href={SITE.substack}>Assinar</a>}
+          </div>
+        </div>
+      </section>
+
+      {recentes.length > 0 && <h2 class="secao">Últimos textos</h2>}
+      <div class="lista">
+        {recentes.map((t) => <Card entry={t} />)}
+      </div>
+      {todos.length > 0 && <p style="margin-top:1.4rem"><a class="btn btn--sec" href={u('textos/')}>Todos os textos</a></p>}
+    </div>
+    <Perfil />
+  </div>
+</Base>
