@@ -7,6 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
+    "links": "node scripts/verificar-links.mjs",
+    "verificar": "astro check && astro build && node scripts/verificar-links.mjs",
     "novo": "node scripts/novo.mjs"
   },
   "dependencies": {
@@ -16,5 +19,13 @@
     "@fontsource/rajdhani": "^5.2.5",
     "@fontsource/share-tech-mono": "^5.2.5",
     "astro": "^5.14.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "pagefind": "^1.6.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

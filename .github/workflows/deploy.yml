@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Definir endereço do site
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
@@ -26,7 +26,12 @@ jobs:
           else                                              # repositório comum
             echo "SITE=https://${DONO}.github.io" >> "$GITHUB_ENV"; echo "BASE=/${REPO}" >> "$GITHUB_ENV"
           fi
-      - uses: withastro/action@v3
+      # Instala, roda "npm run verificar" (astro check + build + links) e empacota dist/.
+      # Se qualquer verificação falhar, nada é publicado.
+      - uses: withastro/action@v6
+        with:
+          node-version: 24
+          build-cmd: npm run verificar
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -35,4 +40,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
