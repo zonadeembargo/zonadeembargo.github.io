@@ -16,7 +16,7 @@ const itens = (await getCollection('institucional', ({ data }) => !data.rascunho
         {itens.map((i) => (
           <article class="placa item">
             <div class="tags"><Selo cor="laranja">[ACESSO RESTRITO]</Selo><Selo cor="ciano">EXTERNO ↗</Selo></div>
-            <h3>{i.data.nome}</h3>
+            <h2 class="item__titulo">{i.data.nome}</h2>
             <p>{i.data.resumo}</p>
             <a class="btn btn--sec" href={i.data.url}>Entrar com conta institucional<span class="visualmente-oculto"> — {i.data.nome}</span></a>
           </article>

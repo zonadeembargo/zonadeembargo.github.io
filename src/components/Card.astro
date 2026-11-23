@@ -3,8 +3,10 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Mascote from './Mascote.astro';
 import { CATEGORIAS, u, dataBR } from '../config';
-interface Props { entry: CollectionEntry<'textos'> }
-const { entry } = Astro.props;
+// nivel: 2 em listas logo abaixo do <h1>; 3 quando há um <h2> de seção antes (ex.: home)
+interface Props { entry: CollectionEntry<'textos'>; nivel?: 2 | 3 }
+const { entry, nivel = 2 } = Astro.props;
+const H = nivel === 3 ? "h3" : "h2";
 const d = entry.data;
 const cat = CATEGORIAS[d.categoria];
 const href = u(`textos/${entry.id}/`);
@@ -18,7 +20,7 @@ const href = u(`textos/${entry.id}/`);
   <div class="card__txt">
     <a class={`tag tag--${cat.cor}`} href={u(`categoria/${d.categoria}/`)}>[{cat.rotulo}]</a>
     {d.rascunho && <span class="tag tag--laranja">RASCUNHO</span>}
-    <h3><a href={href}>{d.titulo}</a></h3>
+    <H class="card__titulo"><a href={href}>{d.titulo}</a></H>
     <p>{d.resumo}</p>
     <span class="meta"><time datetime={d.data.toISOString()}>{dataBR(d.data)}</time> · {d.autor}</span>
   </div>

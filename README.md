@@ -21,6 +21,7 @@ Requer Node.js 22.12+.
 - **[`GUIA-VSCODE-GITHUB.md`](GUIA-VSCODE-GITHUB.md)** — ver no VS Code e enviar ao GitHub.
 - **[`docs/ARQUITETURA.md`](docs/ARQUITETURA.md)** — como o site funciona por dentro, decisões técnicas, manutenção.
 - **[`docs/CHANGELOG.md`](docs/CHANGELOG.md)** — histórico das mudanças.
+- **[`docs/AUDITORIA.md`](docs/AUDITORIA.md)** — última auditoria de acessibilidade e desempenho.
 - **[`LICENCAS.md`](LICENCAS.md)** — licença por tipo de material.
 
 ## Onde mexer

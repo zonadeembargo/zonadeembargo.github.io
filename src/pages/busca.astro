@@ -26,6 +26,12 @@ const pf = u('pagefind/');
     const pf = document.getElementById('busca').dataset.pf;
     try {
       await import(pf + 'pagefind-component-ui.js');
+      // Correção de acessibilidade: o botão de filtro do Pagefind (role="combobox") não expõe nome
+      // a leitores de tela; damos um rótulo explícito assim que ele aparece.
+      const rotular = () => document.querySelectorAll('pagefind-filter-dropdown .pf-dropdown-trigger:not([aria-label])')
+        .forEach((b) => b.setAttribute('aria-label', 'Filtrar por tema'));
+      rotular();
+      new MutationObserver(rotular).observe(document.getElementById('busca'), { childList: true, subtree: true });
       // Permite links do tipo /busca/?q=termo
       const q = new URLSearchParams(location.search).get('q');
       if (q) window.PagefindComponents.getInstanceManager().getInstance('default').triggerSearch(q);

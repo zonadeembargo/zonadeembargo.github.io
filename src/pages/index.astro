@@ -61,7 +61,7 @@ const cat = destaque ? CATEGORIAS[destaque.data.categoria] : null;
 
       {recentes.length > 0 && <h2 class="secao">Últimas transmissões</h2>}
       <div class="lista">
-        {recentes.map((t) => <Card entry={t} />)}
+        {recentes.map((t) => <Card entry={t} nivel={3} />)}
       </div>
       {todos.length > 0 && <p class="mais"><a class="btn btn--sec" href={u('textos/')}>Arquivo completo</a></p>}
     </div>

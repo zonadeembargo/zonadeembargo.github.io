@@ -12,7 +12,7 @@ referencias:
 
 Texto de demonstração. Em textos com dados, vale registrar sempre: **fonte**, **data de acesso**, **método** e **limitações**.
 
-### Modelo de ficha
+## Modelo de ficha
 
 | Item | Informação |
 |---|---|

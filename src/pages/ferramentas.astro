@@ -29,7 +29,7 @@ const local = (url: string) => url.startsWith('downloads/');
                 <Selo cor="oliva">{d.licenca}</Selo>
                 {d.versao && <Selo cor="laranja">v{d.versao}</Selo>}
               </div>
-              <h3>{d.nome}</h3>
+              <h2 class="item__titulo">{d.nome}</h2>
               <p>{d.resumo}</p>
               <div class="tags">
                 {local(d.url) ? <Selo cor="oliva">ARQUIVO LOCAL</Selo> : <Selo cor="ciano">EXTERNO ↗</Selo>}
