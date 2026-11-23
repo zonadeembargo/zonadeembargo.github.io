@@ -7,7 +7,7 @@ export async function GET(context) {
   const textos = (await getCollection('textos', ({ data }) => !data.rascunho))
     .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
   return rss({
-    title: `${SITE.nome} · ${SITE.projeto}`,
+    title: SITE.projeto,
     description: SITE.descricao,
     site: context.site,
     items: textos.map((t) => ({

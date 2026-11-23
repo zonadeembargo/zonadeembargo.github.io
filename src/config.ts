@@ -4,8 +4,8 @@
 // ============================================================
 
 export const SITE = {
-  nome: 'Gilberto Milhomem',          // aparece no cabeçalho (como na identidade visual)
-  projeto: 'Zona de Embargo',         // NOME PROVISÓRIO do site/projeto — troque quando decidir
+  projeto: 'Zona de Embargo',         // TÍTULO do site: cabeçalho, aba do navegador, RSS, compartilhamento
+  nome: 'Gilberto Milhomem',          // ASSINATURA: "por ..." no cabeçalho e autor padrão dos textos
   slogan: 'Notas de campo sobre território, ambiente e colapso.',
   descricao: 'Textos, mapas e ferramentas livres sobre questões socioambientais no Brasil.',
   substack: '',   // endereço do Substack (https://...). Vazio = o botão "Assinar" some.

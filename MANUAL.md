@@ -167,7 +167,7 @@ Regra: **o texto nasce no site; o Substack recebe uma cópia**. Assim a versão 
 
 Tudo em `src/config.ts`, com comentários. Principais campos:
 
-- `SITE.projeto`: nome do projeto (**hoje é provisório**). `SITE.nome`: seu nome no cabeçalho.
+- `SITE.projeto`: título do site (cabeçalho, aba do navegador, RSS, prévia nas redes). `SITE.nome`: sua assinatura ("por …" abaixo do título) e autor padrão dos textos.
 - `SITE.substack`: endereço do Substack. Preenchido, aparece o botão **Assinar**; vazio, ele some.
 - `SITE.apoio`: link de apoio voluntário. Preenchido, aparece **Apoiar** na lateral; vazio, some.
 - `SITE.aviso`, `SITE.licenca` e `SITE.licencaCodigo`: textos do rodapé e da página Licenças.

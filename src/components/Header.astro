@@ -5,11 +5,11 @@ const ativo = (href: string) => (href === '' ? atual === u() : atual.startsWith(
 ---
 <header class="topo">
   <div class="wrap">
-    <a class="marca" href={u()} aria-label={`${SITE.nome} — página inicial`}>
+    <a class="marca" href={u()} aria-label={`${SITE.projeto}, por ${SITE.nome} — página inicial`}>
       <img src={u('emblema-120.webp')} srcset={`${u('emblema-120.webp')} 1x, ${u('emblema-240.webp')} 2x`} alt="" width="60" height="60" />
       <span>
-        <span class="marca__nome">{SITE.nome}</span>
-        <span class="marca__proj">{SITE.projeto}</span>
+        <span class="marca__titulo">{SITE.projeto}</span>
+        <span class="marca__assinatura">por {SITE.nome}</span>
       </span>
     </a>
     <nav class="nav" aria-label="Principal">

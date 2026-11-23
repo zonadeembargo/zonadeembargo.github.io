@@ -41,3 +41,4 @@ Formato: data · versão · o que mudou. Detalhes de cada passo em `git log`.
 - Novo **emblema** (hexágono verde, foice e martelo, circuitos) no cabeçalho, no favicon e no ícone de celular; fundo externo tornado transparente. Logos anteriores arquivados em `docs/identidade/`.
 - Nova imagem de compartilhamento (`public/img/og.jpg`, 1200×630): emblema + arte do topo. A anterior está em `docs/identidade/og-anterior.jpg`.
 - Auditoria automática de acessibilidade e desempenho (ver `docs/AUDITORIA.md`): hierarquia de títulos corrigida, filtro da busca com nome acessível, contraste AA no cabeçalho (`--laranja-claro`), fontes pré-carregadas. 0 violações axe em 13 páginas.
+- Cabeçalho invertido: **ZONA DE EMBARGO** como título e "por Gilberto Milhomem" como assinatura; título da home e do RSS seguem o projeto.
