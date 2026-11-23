@@ -13,12 +13,13 @@
     "novo": "node scripts/novo.mjs"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.10",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.6",
     "@fontsource/black-ops-one": "^5.2.5",
     "@fontsource/rajdhani": "^5.2.5",
     "@fontsource/share-tech-mono": "^5.2.5",
-    "astro": "^6.4.8"
+    "astro": "^7.4.13"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
