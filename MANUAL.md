@@ -31,7 +31,7 @@ Arquivos cujo nome começa com `_` (como `_modelo.md`) **não aparecem no site**
 
 > Passo a passo ilustrado com o VS Code (ver o site no computador e enviar ao GitHub): **`GUIA-VSCODE-GITHUB.md`**. Esta seção resume o lado do GitHub.
 
-1. Crie uma conta em github.com e um **repositório novo** (botão *New*). Pode ser público. **Caminho adotado:** organização `zona-de-embargo` com o repositório `zona-de-embargo.github.io` → site em `https://zona-de-embargo.github.io/` (passo a passo em `GUIA-VSCODE-GITHUB.md`, B3).
+1. Crie uma conta em github.com e um **repositório novo** (botão *New*). Pode ser público. **Caminho adotado:** organização `zonadeembargo` com o repositório `zonadeembargo.github.io` → site em `https://zonadeembargo.github.io/` (passo a passo em `GUIA-VSCODE-GITHUB.md`, B3).
    - Para o endereço `https://SEU-USUARIO.github.io/`, o repositório deve se chamar exatamente `SEU-USUARIO.github.io`.
    - Com qualquer outro nome (ex.: `meu-site`), o endereço será `https://SEU-USUARIO.github.io/meu-site/`. Tudo funciona igual; os links se ajustam sozinhos.
 2. Envie o projeto ao repositório. **A pasta `site/` já é um repositório Git** (com histórico desde a V2), então basta ligá-la ao GitHub e enviar: `git remote add origin ENDERECO` e `git push -u origin main` (detalhes em `GUIA-VSCODE-GITHUB.md`, B4). Não use o upload pelo navegador: ele perderia o histórico.

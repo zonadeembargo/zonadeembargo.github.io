@@ -74,9 +74,9 @@ Para não expor o e-mail pessoal nos commits, no GitHub abra *Settings → Email
 ### B3. Criar a conta e o repositório
 
 1. Crie a conta em github.com e confirme o e-mail. Ative a verificação em duas etapas (*Settings → Password and authentication*).
-2. **Caminho adotado: organização `zona-de-embargo`** → o site fica em `https://zona-de-embargo.github.io/`.
-   - Crie a organização (gratuita) em <https://github.com/account/organizations/new?plan=free>: nome `zona-de-embargo`, plano *Free*, "pertence à minha conta pessoal".
-   - Dentro dela, crie o repositório **`zona-de-embargo.github.io`**, público e **vazio** (sem README, sem .gitignore, sem licença).
+2. **Caminho adotado: organização `zonadeembargo`** → o site fica em `https://zonadeembargo.github.io/`.
+   - Crie a organização (gratuita) em <https://github.com/account/organizations/new?plan=free>: nome `zonadeembargo`, plano *Free*, "pertence à minha conta pessoal".
+   - Dentro dela, crie o repositório **`zonadeembargo.github.io`**, público e **vazio** (sem README, sem .gitignore, sem licença).
    - O workflow reconhece esse formato (`DONO.github.io`) e publica na raiz, sem subpasta.
    - Outras possibilidades, se um dia mudar: repositório comum na conta pessoal (`SEU-USUARIO.github.io/nome-do-repo/`) ou domínio próprio (MANUAL, seção 3).
 
@@ -91,7 +91,7 @@ A pasta `site/` **já é um repositório Git**, com o histórico da evolução (
 **Alternativa por terminal** (depois de criar o repositório **vazio** em github.com → *New*, sem README):
 
 ```bash
-git remote add origin https://github.com/zona-de-embargo/zona-de-embargo.github.io.git
+git remote add origin https://github.com/zonadeembargo/zonadeembargo.github.io.git
 git push -u origin main
 ```
 
