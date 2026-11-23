@@ -1,9 +1,12 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { CHAVES, SITE } from './config';
 
 // Arquivos cujo nome começa com "_" são ignorados (servem de modelo).
 const padrao = '**/[^_]*.md';
+// Endereço web válido, só http/https (bloqueia javascript:, data: etc.).
+const link = () => z.url({ protocol: /^https?$/ });
 
 const textos = defineCollection({
   loader: glob({ pattern: padrao, base: './src/content/textos' }),
@@ -18,10 +21,10 @@ const textos = defineCollection({
     capaAlt: z.string().optional(),               // descrição da capa para leitores de tela
     destaque: z.boolean().default(false),         // true = vai para o topo da página inicial
     atualizado: z.coerce.date().optional(),
-    substack: z.string().url().optional(),        // endereço da cópia no Substack (opcional)
+    substack: link().optional(),        // endereço da cópia no Substack (opcional)
     referencias: z.array(z.object({              // lista de fontes (opcional)
       titulo: z.string(),
-      url: z.string().url().optional(),
+      url: link().optional(),
     })).default([]),
     rascunho: z.boolean().default(false),
   }).refine((d) => !d.capa || d.capaAlt, { message: 'Texto com "capa" precisa de "capaAlt" (descrição da imagem).', path: ['capaAlt'] }),
@@ -38,7 +41,7 @@ const ferramentas = defineCollection({
     licenca: z.string().default('Livre'),
     versao: z.string().optional(),
     acesso: z.enum(['livre', 'login']).default('livre'), // login = precisa de conta no site de destino
-    codigo: z.string().url().optional(),                 // repositório do código-fonte (opcional)
+    codigo: link().optional(),                 // repositório do código-fonte (opcional)
     rascunho: z.boolean().default(false),
   }),
 });
@@ -48,7 +51,7 @@ const institucional = defineCollection({
   schema: z.object({
     nome: z.string(),
     resumo: z.string(),
-    url: z.string().url(), // só o LINK; o documento fica no sistema da instituição
+    url: link(), // só o LINK; o documento fica no sistema da instituição
     rascunho: z.boolean().default(false),
   }),
 });
