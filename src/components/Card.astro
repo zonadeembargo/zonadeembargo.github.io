@@ -1,21 +1,25 @@
 ---
 import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Mascote from './Mascote.astro';
 import { CATEGORIAS, u, dataBR } from '../config';
+interface Props { entry: CollectionEntry<'textos'> }
 const { entry } = Astro.props;
 const d = entry.data;
-const cat = CATEGORIAS[d.categoria as keyof typeof CATEGORIAS];
+const cat = CATEGORIAS[d.categoria];
 const href = u(`textos/${entry.id}/`);
 ---
 <article class={`placa card card--${cat.cor}`}>
   <a class="card__img" href={href} tabindex="-1" aria-hidden="true">
     {d.capa
       ? <Image class="capa" src={d.capa} alt="" widths={[360, 720]} sizes="(min-width:640px) 230px, 100vw" />
-      : <img src={u(`mascote/mascote-${cat.mascote}-400.webp`)} alt="" loading="lazy" decoding="async" />}
+      : <Mascote nome={cat.mascote} />}
   </a>
   <div class="card__txt">
     <a class={`tag tag--${cat.cor}`} href={u(`categoria/${d.categoria}/`)}>[{cat.rotulo}]</a>
+    {d.rascunho && <span class="tag tag--laranja">RASCUNHO</span>}
     <h3><a href={href}>{d.titulo}</a></h3>
     <p>{d.resumo}</p>
-    <span class="meta"><time datetime={d.data.toISOString()}>{dataBR(d.data)}</time></span>
+    <span class="meta"><time datetime={d.data.toISOString()}>{dataBR(d.data)}</time> · {d.autor}</span>
   </div>
 </article>

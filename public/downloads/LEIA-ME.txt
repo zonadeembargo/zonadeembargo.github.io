@@ -1,0 +1,3 @@
+Coloque aqui arquivos para download (zip, pdf, qgz...).
+No cabeçalho da ferramenta, use: url: "downloads/nome-do-arquivo.zip"
+Nunca coloque aqui material institucional restrito.

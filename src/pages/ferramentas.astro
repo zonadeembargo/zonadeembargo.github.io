@@ -1,27 +1,52 @@
 ---
 import Base from '../layouts/Base.astro';
+import CabecalhoSecao from '../components/CabecalhoSecao.astro';
+import Mascote from '../components/Mascote.astro';
+import Selo from '../components/Selo.astro';
 import { getCollection } from 'astro:content';
 import { SECOES, u } from '../config';
 const itens = (await getCollection('ferramentas', ({ data }) => !data.rascunho)).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'pt-BR'));
+const local = (url: string) => url.startsWith('downloads/');
 ---
-<Base titulo={`${SECOES.ferramentas.rotulo} (${SECOES.ferramentas.sub})`} descricao="Plugins, scripts e ferramentas livres.">
+<Base titulo={`${SECOES.ferramentas.rotulo} (${SECOES.ferramentas.sub})`} descricao="Plugins, scripts e ferramentas livres para download.">
   <div class="wrap">
-    <span class="rotulo-sub">{SECOES.ferramentas.sub}</span>
-    <h1 class="titulo-pagina">{SECOES.ferramentas.rotulo}</h1>
-    <p class="sub">Plugins, scripts e modelos de uso livre. Baixe, use, adapte e compartilhe.</p>
+    <CabecalhoSecao rotulo={SECOES.ferramentas.rotulo} sub={`${SECOES.ferramentas.sub} · Downloads`} mascote={SECOES.ferramentas.mascote}
+      descricao="Ferramentas open source, scripts, modelos e documentação de uso livre. Baixe, use, adapte e compartilhe." />
+    <p class="legenda" aria-label="Legenda">
+      <Selo cor="oliva">ARQUIVO LOCAL</Selo> baixado deste site ·
+      <Selo cor="ciano">EXTERNO ↗</Selo> abre outro site ·
+      <Selo cor="laranja">REQUER LOGIN</Selo> o site de destino pede conta
+    </p>
     {itens.length ? (
       <div class="grade-itens">
-        {itens.map((i) => (
-          <article class="placa item">
-            <div class="tags"><span class="tag tag--ciano">[{i.data.tipo.toUpperCase()}]</span><span class="tag tag--oliva">{i.data.licenca}</span>{i.data.versao && <span class="tag tag--laranja">v{i.data.versao}</span>}</div>
-            <h3>{i.data.nome}</h3>
-            <p>{i.data.resumo}</p>
-            <a class="btn btn--sec" href={i.data.url}>Baixar / acessar</a>
-          </article>
-        ))}
+        {itens.map((i) => {
+          const d = i.data;
+          const href = local(d.url) ? u(d.url) : d.url;
+          return (
+            <article class="placa item">
+              <div class="tags">
+                <Selo cor="ciano">[{d.tipo.toUpperCase()}]</Selo>
+                <Selo cor="oliva">{d.licenca}</Selo>
+                {d.versao && <Selo cor="laranja">v{d.versao}</Selo>}
+              </div>
+              <h3>{d.nome}</h3>
+              <p>{d.resumo}</p>
+              <div class="tags">
+                {local(d.url) ? <Selo cor="oliva">ARQUIVO LOCAL</Selo> : <Selo cor="ciano">EXTERNO ↗</Selo>}
+                {d.acesso === 'login' && <Selo cor="laranja">REQUER LOGIN</Selo>}
+              </div>
+              <div class="item__acoes">
+                <a class="btn btn--sec" href={href} download={local(d.url) ? '' : undefined}>
+                  {local(d.url) ? 'Baixar' : 'Acessar'}<span class="visualmente-oculto"> {d.nome}{local(d.url) ? '' : ' (site externo)'}</span>
+                </a>
+                {d.codigo && <a class="link-codigo" href={d.codigo}>Código-fonte ↗</a>}
+              </div>
+            </article>
+          );
+        })}
       </div>
     ) : (
-      <div class="placa vazio"><img src={u('mascote/mascote-pesquisador-400.webp')} alt="" /><p>Nenhuma ferramenta cadastrada ainda.</p></div>
+      <div class="placa vazio"><Mascote nome="pesquisador" /><p>Nenhuma ferramenta cadastrada ainda.</p></div>
     )}
     <p class="aviso">Material de uso restrito a uma instituição fica em outra página: <a href={u(SECOES.institucional.href)}>{SECOES.institucional.rotulo} ({SECOES.institucional.sub})</a>.</p>
   </div>

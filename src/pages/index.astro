@@ -2,20 +2,26 @@
 import Base from '../layouts/Base.astro';
 import Card from '../components/Card.astro';
 import Perfil from '../components/Perfil.astro';
+import Mascote from '../components/Mascote.astro';
+import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import { SITE, CATEGORIAS, u } from '../config';
+import { SITE, SECOES, CATEGORIAS, u } from '../config';
+import hero from '../assets/hero.webp';
 
 const todos = (await getCollection('textos', ({ data }) => !data.rascunho))
   .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
-const destaque = todos[0];
-const recentes = todos.slice(1, 7);
-const cat = destaque ? CATEGORIAS[destaque.data.categoria as keyof typeof CATEGORIAS] : null;
+// Destaque: o texto mais recente marcado com "destaque: true"; sem nenhum, o mais recente.
+const destaque = todos.find((t) => t.data.destaque) ?? todos[0];
+const recentes = todos.filter((t) => t !== destaque).slice(0, 6);
+const cat = destaque ? CATEGORIAS[destaque.data.categoria] : null;
 ---
 <Base>
   <div class="wrap grade">
     <div>
       <section class="hero" aria-label="Destaque">
-        <img class="hero__img" src={u('img/hero.webp')} alt="Ilustração: agente de farda verde em meio a ruínas tomadas pela mata, com mapas holográficos, um drone de monitoramento e uma bandeira do Brasil manchada de sangue ao fundo" width="2400" height="741" fetchpriority="high" />
+        <Picture class="hero__img" src={hero} formats={['avif', 'webp']} fallbackFormat="webp" widths={[640, 1200, 1800, 2400]}
+          sizes="(min-width: 1180px) 850px, (min-width: 900px) 70vw, 100vw" loading="eager" fetchpriority="high"
+          alt="Ilustração: agente de farda verde em meio a ruínas tomadas pela mata, com mapas holográficos, um drone de monitoramento e uma bandeira do Brasil manchada de sangue ao fundo" />
         <div class="hero__txt">
           {destaque ? (
             <>
@@ -37,11 +43,27 @@ const cat = destaque ? CATEGORIAS[destaque.data.categoria as keyof typeof CATEGO
         </div>
       </section>
 
-      {recentes.length > 0 && <h2 class="secao">Últimos textos</h2>}
+      <section class="placa painel" aria-labelledby="painel-titulo">
+        <Mascote nome={SECOES.inicio.mascote} class="painel__mascote" />
+        <div>
+          <h2 class="painel__titulo" id="painel-titulo"><span class="status" aria-hidden="true"></span>{SITE.projeto} · canal aberto</h2>
+          {SITE.apresentacao && <p>{SITE.apresentacao}</p>}
+          <nav class="atalhos" aria-label="Acesso rápido">
+            <a href={u(SECOES.manifesto.href)}><strong>{SECOES.manifesto.rotulo}</strong><small>{SECOES.manifesto.sub}</small></a>
+            <a href={u(SECOES.sobre.href)}><strong>{SECOES.sobre.rotulo}</strong><small>{SECOES.sobre.sub}</small></a>
+            <a href={u(SECOES.ferramentas.href)}><strong>{SECOES.ferramentas.rotulo}</strong><small>Downloads</small></a>
+            <a href={u(SECOES.busca.href)}><strong>{SECOES.busca.rotulo}</strong><small>{SECOES.busca.sub}</small></a>
+            <a href={u('rss.xml')}><strong>RSS</strong><small>Assinar o feed</small></a>
+            {SITE.canais.map((c) => <a href={c.url} rel="me"><strong>{c.nome.toUpperCase()}</strong><small>Canal externo ↗</small></a>)}
+          </nav>
+        </div>
+      </section>
+
+      {recentes.length > 0 && <h2 class="secao">Últimas transmissões</h2>}
       <div class="lista">
         {recentes.map((t) => <Card entry={t} />)}
       </div>
-      {todos.length > 0 && <p style="margin-top:1.4rem"><a class="btn btn--sec" href={u('textos/')}>Todos os textos</a></p>}
+      {todos.length > 0 && <p class="mais"><a class="btn btn--sec" href={u('textos/')}>Arquivo completo</a></p>}
     </div>
     <Perfil />
   </div>

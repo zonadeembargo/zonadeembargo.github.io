@@ -1,0 +1,28 @@
+---
+// "Leitura relacionada": até 3 textos que compartilham tags (peso 2) ou categoria (peso 1).
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { CATEGORIAS, u, dataBR } from '../config';
+interface Props { entry: CollectionEntry<'textos'> }
+const { entry } = Astro.props;
+const outros = await getCollection('textos', ({ id, data }) => id !== entry.id && !data.rascunho);
+const pontos = (t: CollectionEntry<'textos'>) =>
+  t.data.tags.filter((x) => entry.data.tags.includes(x)).length * 2 + (t.data.categoria === entry.data.categoria ? 1 : 0);
+const lista = outros.map((t) => ({ t, p: pontos(t) })).filter((x) => x.p > 0)
+  .sort((a, b) => b.p - a.p || b.t.data.data.valueOf() - a.t.data.data.valueOf()).slice(0, 3).map((x) => x.t);
+---
+{lista.length > 0 && (
+  <nav class="relacionados" aria-labelledby="rel-titulo">
+    <h2 class="secao" id="rel-titulo">Leitura relacionada</h2>
+    <ul>
+      {lista.map((t) => {
+        const c = CATEGORIAS[t.data.categoria];
+        return (
+          <li class={`rel rel--${c.cor}`}>
+            <span class="meta">{c.rotulo} · <time datetime={t.data.data.toISOString()}>{dataBR(t.data.data)}</time></span>
+            <a href={u(`textos/${t.id}/`)}>{t.data.titulo}</a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+)}

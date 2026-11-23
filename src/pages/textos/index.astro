@@ -1,22 +1,31 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Card from '../../components/Card.astro';
+import CabecalhoSecao from '../../components/CabecalhoSecao.astro';
+import FiltroTemas from '../../components/FiltroTemas.astro';
 import { getCollection } from 'astro:content';
-import { CATEGORIAS, SECOES, u } from '../../config';
+import { SECOES, u, slug } from '../../config';
 const todos = (await getCollection('textos', ({ data }) => !data.rascunho || import.meta.env.DEV))
   .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+// Índice de etiquetas com contagem, da mais usada para a menos usada.
+const contagem = new Map<string, number>();
+for (const t of todos) for (const tag of t.data.tags) contagem.set(tag, (contagem.get(tag) ?? 0) + 1);
+const tags = [...contagem].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
 ---
 <Base titulo={`${SECOES.textos.rotulo} (${SECOES.textos.sub})`} descricao="Todos os textos publicados.">
   <div class="wrap">
-    <span class="rotulo-sub">{SECOES.textos.sub}</span>
-    <h1 class="titulo-pagina">{SECOES.textos.rotulo}</h1>
-    <p class="sub">Tudo o que foi publicado, do mais recente ao mais antigo.</p>
-    <nav class="chips" aria-label="Temas">
-      <a href={u('textos/')} aria-current="page">TODOS</a>
-      {Object.entries(CATEGORIAS).map(([k, c]) => <a href={u(`categoria/${k}/`)}>{c.rotulo}</a>)}
-    </nav>
-    <div class="lista" style="margin-top:1.4rem">
+    <CabecalhoSecao rotulo={SECOES.textos.rotulo} sub={SECOES.textos.sub} mascote={SECOES.textos.mascote}
+      descricao={`Arquivo editorial completo: ${todos.length} transmissão(ões), da mais recente à mais antiga.`}>
+      <FiltroTemas />
+    </CabecalhoSecao>
+    <div class="lista">
       {todos.map((t) => <Card entry={t} />)}
     </div>
+    {tags.length > 0 && (
+      <nav class="indice-tags" aria-labelledby="tags-titulo">
+        <h2 class="secao" id="tags-titulo">Etiquetas</h2>
+        <div class="chips">{tags.map(([t, n]) => <a href={u(`tags/${slug(t)}/`)}>#{t} <small>{n}</small></a>)}</div>
+      </nav>
+    )}
   </div>
 </Base>

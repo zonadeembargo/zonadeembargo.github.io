@@ -1,20 +1,27 @@
 ---
 // Páginas simples escritas em Markdown: src/content/paginas/<nome>.md  ->  /<nome>/
+// Se o nome coincidir com uma seção de config.ts (sobre, manifesto, licencas), usa o mascote dela.
 import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
 import { getCollection, render } from 'astro:content';
+import { SECOES } from '../config';
 export async function getStaticPaths() {
   const todas = await getCollection('paginas');
   return todas.map((entry) => ({ params: { pagina: entry.id }, props: { entry } }));
 }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const secao = Object.values(SECOES).find((s) => s.href === `${entry.id}/`);
 ---
-<Base titulo={entry.data.sub ? `${entry.data.titulo} (${entry.data.sub})` : entry.data.titulo}>
+<Base titulo={entry.data.sub ? `${entry.data.titulo} (${entry.data.sub})` : entry.data.titulo} descricao={entry.data.descricao}>
   <div class="wrap">
     <article class="artigo">
-      <header>
-        {entry.data.sub && <span class="rotulo-sub" style="margin-top:0">{entry.data.sub}</span>}
-        <h1>{entry.data.titulo}</h1>
+      <header class="cab-secao">
+        <div class="cab-secao__txt">
+          {entry.data.sub && <span class="rotulo-sub">{entry.data.sub}</span>}
+          <h1>{entry.data.titulo}</h1>
+        </div>
+        {secao && <Mascote nome={secao.mascote} class="cab-secao__mascote" ansioso />}
       </header>
       <div class="prosa"><Content /></div>
     </article>

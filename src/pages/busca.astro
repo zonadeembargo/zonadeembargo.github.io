@@ -1,0 +1,37 @@
+---
+// Busca estática com Pagefind (Component UI). O índice é gerado DEPOIS do build
+// (npm run build) e fica em dist/pagefind/. No modo "npm run dev" ele não existe.
+import Base from '../layouts/Base.astro';
+import CabecalhoSecao from '../components/CabecalhoSecao.astro';
+import { SECOES, u } from '../config';
+const pf = u('pagefind/');
+---
+<Base titulo={`${SECOES.busca.rotulo} (${SECOES.busca.sub})`} descricao="Busca nos textos publicados.">
+  <div class="wrap">
+    <CabecalhoSecao rotulo={SECOES.busca.rotulo} sub={SECOES.busca.sub} mascote={SECOES.busca.mascote}
+      descricao="Pesquise em todos os textos publicados e filtre por tema." />
+    <div class="busca placa" id="busca" data-pf={pf}>
+      <pagefind-config bundle-path={pf} lang="pt-br"></pagefind-config>
+      <pagefind-input></pagefind-input>
+      <div class="busca__filtros">
+        <pagefind-filter-dropdown filter="tema" label="Tema"></pagefind-filter-dropdown>
+        <pagefind-summary></pagefind-summary>
+      </div>
+      <pagefind-results></pagefind-results>
+      <noscript><p class="aviso">A busca precisa de JavaScript. Sem ele, use o <a href={u('textos/')}>arquivo de textos</a> e as etiquetas.</p></noscript>
+    </div>
+  </div>
+  <link rel="stylesheet" href={`${pf}pagefind-component-ui.css`} />
+  <script is:inline type="module">
+    const pf = document.getElementById('busca').dataset.pf;
+    try {
+      await import(pf + 'pagefind-component-ui.js');
+      // Permite links do tipo /busca/?q=termo
+      const q = new URLSearchParams(location.search).get('q');
+      if (q) window.PagefindComponents.getInstanceManager().getInstance('default').triggerSearch(q);
+    } catch {
+      document.getElementById('busca').insertAdjacentHTML('beforeend',
+        '<p class="aviso">Índice de busca indisponível. Ele é gerado no <code>npm run build</code>; para testar localmente use <code>npm run build</code> e depois <code>npm run preview</code>.</p>');
+    }
+  </script>
+</Base>

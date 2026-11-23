@@ -1,0 +1,7 @@
+---
+// Etiqueta de classificação/status. Uso: <Selo cor="ciano">EXTERNO ↗</Selo>
+interface Props { cor?: 'laranja' | 'ciano' | 'vermelho' | 'oliva'; href?: string; titulo?: string }
+const { cor = 'oliva', href, titulo } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+<Tag class={`tag tag--${cor}`} href={href} title={titulo}><slot /></Tag>

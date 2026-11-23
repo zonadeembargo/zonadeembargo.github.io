@@ -1,7 +1,9 @@
 ---
 import { SITE, SECOES, u } from '../config';
+const links = [SECOES.manifesto, SECOES.busca, SECOES.licencas, SECOES.institucional];
 ---
 <footer class="rodape">
+  <div class="barras" aria-hidden="true"><i></i><i></i></div>
   <div class="wrap">
     <div>
       <p>{SITE.aviso}</p>
@@ -12,10 +14,11 @@ import { SITE, SECOES, u } from '../config';
       </p>
     </div>
     <nav aria-label="Rodapé">
-      <a href={u('rss.xml')}>RSS</a>
-      {SITE.substack && <a href={SITE.substack}>Substack</a>}
-      <a href={u(SECOES.licencas.href)}>{SECOES.licencas.rotulo}<small>{SECOES.licencas.sub}</small></a>
-      <a href={u(SECOES.institucional.href)}>{SECOES.institucional.rotulo}<small>{SECOES.institucional.sub}</small></a>
+      {links.map((s) => <a href={u(s.href)}>{s.rotulo}<small>{s.sub}</small></a>)}
+      <a href={u('rss.xml')}>RSS<small>Feed</small></a>
+      {SITE.substack && <a href={SITE.substack}>SUBSTACK<small>Externo ↗</small></a>}
+      {SITE.apoio && <a href={SITE.apoio}>APOIAR<small>Externo ↗</small></a>}
+      {SITE.canais.map((c) => <a href={c.url} rel="me">{c.nome.toUpperCase()}<small>Externo ↗</small></a>)}
     </nav>
   </div>
 </footer>

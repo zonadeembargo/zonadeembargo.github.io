@@ -1,11 +1,16 @@
 ---
 titulo: "Dossiê"
 sub: "Sobre"
+descricao: "Quem escreve, de onde escreve e por que este espaço existe."
 ---
 
 > **Texto de exemplo.** Substitua tudo isto pelo seu texto. O arquivo é `src/content/paginas/sobre.md`.
 
 Aqui entra a apresentação: quem escreve, de onde escreve e por que este espaço existe.
+
+## Manifesto
+
+Os princípios e objetivos editoriais estão no [Manifesto](../manifesto/).
 
 ## Do que trata este site
 

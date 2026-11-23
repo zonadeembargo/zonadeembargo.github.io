@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "check": "astro check",
     "links": "node scripts/verificar-links.mjs",
-    "verificar": "astro check && astro build && node scripts/verificar-links.mjs",
+    "verificar": "astro check && npm run build && node scripts/verificar-links.mjs",
     "novo": "node scripts/novo.mjs"
   },
   "dependencies": {

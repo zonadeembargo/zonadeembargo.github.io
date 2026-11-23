@@ -1,0 +1,16 @@
+---
+// Cabeçalho padrão das páginas de seção: rótulo convencional, título-fantasia, descrição e mascote.
+import Mascote from './Mascote.astro';
+import type { Mascote as M } from '../config';
+interface Props { rotulo: string; sub?: string; descricao?: string; mascote?: M }
+const { rotulo, sub, descricao, mascote } = Astro.props;
+---
+<header class="cab-secao">
+  <div class="cab-secao__txt">
+    {sub && <span class="rotulo-sub">{sub}</span>}
+    <h1 class="titulo-pagina">{rotulo}</h1>
+    {descricao && <p class="sub">{descricao}</p>}
+    <slot />
+  </div>
+  {mascote && <Mascote nome={mascote} class="cab-secao__mascote" ansioso />}
+</header>

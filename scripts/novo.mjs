@@ -2,7 +2,9 @@
 // Uso:  npm run novo -- "Título do texto" [categoria]
 import { writeFileSync, existsSync } from 'node:fs';
 
+const CATS = ['cartografia', 'cronicas', 'tecno'];
 const [titulo, categoria = 'cartografia'] = process.argv.slice(2);
+if (titulo && !CATS.includes(categoria)) { console.log(`Categoria inválida: ${categoria}. Use: ${CATS.join(' | ')}`); process.exit(1); }
 if (!titulo) { console.log('Uso: npm run novo -- "Título do texto" [cartografia|cronicas|tecno]'); process.exit(1); }
 
 const slug = titulo.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -16,6 +18,7 @@ titulo: "${titulo.replace(/"/g, '\\"')}"
 resumo: "Uma ou duas frases que aparecem no card e nas redes sociais."
 data: ${hoje}
 categoria: ${categoria}
+tags: []
 rascunho: true
 ---
 

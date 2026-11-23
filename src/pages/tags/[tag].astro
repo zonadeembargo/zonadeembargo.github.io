@@ -1,0 +1,28 @@
+---
+// Uma página por etiqueta, gerada a partir do campo "tags" dos textos.
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+import CabecalhoSecao from '../../components/CabecalhoSecao.astro';
+import { getCollection } from 'astro:content';
+import { u, slug } from '../../config';
+
+export async function getStaticPaths() {
+  const textos = await getCollection('textos', ({ data }) => !data.rascunho || import.meta.env.DEV);
+  const mapa = new Map<string, { nome: string; textos: typeof textos }>();
+  for (const t of textos) for (const nome of t.data.tags) {
+    const s = slug(nome);
+    if (!mapa.has(s)) mapa.set(s, { nome, textos: [] });
+    mapa.get(s)!.textos.push(t);
+  }
+  return [...mapa].map(([tag, v]) => ({ params: { tag }, props: v }));
+}
+const { nome, textos } = Astro.props;
+const lista = textos.sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+---
+<Base titulo={`#${nome}`} descricao={`Textos com a etiqueta ${nome}.`}>
+  <div class="wrap">
+    <CabecalhoSecao sub="Etiqueta" rotulo={`#${nome}`} descricao={`${lista.length} texto(s) com esta etiqueta.`} />
+    <p><a href={u('textos/')}>← Todos os textos</a></p>
+    <div class="lista">{lista.map((t) => <Card entry={t} />)}</div>
+  </div>
+</Base>

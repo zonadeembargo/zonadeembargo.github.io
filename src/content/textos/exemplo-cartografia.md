@@ -3,9 +3,11 @@ titulo: "[EXEMPLO] Como um texto de Cartografia do Colapso aparece aqui"
 resumo: "Texto de demonstração. Apague este arquivo quando publicar o primeiro texto de verdade."
 data: 2026-10-21
 categoria: cartografia
+tags: [Amazônia, dados abertos]
+destaque: true
 ---
 
-Este é um **texto de exemplo**, só para mostrar como o site exibe um artigo. Para removê-lo, apague o arquivo `src/content/textos/exemplo-territorio.md`.
+Este é um **texto de exemplo**, só para mostrar como o site exibe um artigo. Para removê-lo, apague o arquivo `src/content/textos/exemplo-cartografia.md`.
 
 ## Subtítulos
 

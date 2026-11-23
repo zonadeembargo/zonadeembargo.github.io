@@ -1,13 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
 import { u } from '../config';
 ---
 <Base titulo="Página não encontrada" semIndexar>
   <div class="wrap">
+    <span class="rotulo-sub">Erro 404</span>
     <h1 class="titulo-pagina">Sinal não encontrado</h1>
     <div class="placa vazio">
-      <img src={u('mascote/mascote-tira-duvidas-400.webp')} alt="" style="width:160px" />
-      <p>Esta página não existe ou mudou de lugar. <a href={u()}>Voltar ao início</a> ou ver <a href={u('textos/')}>todos os textos</a>.</p>
+      <Mascote nome="tira-duvidas" />
+      <p>Esta página não existe ou mudou de lugar. <a href={u()}>Voltar ao início</a>, ver <a href={u('textos/')}>todos os textos</a> ou <a href={u('busca/')}>fazer uma busca</a>.</p>
     </div>
   </div>
 </Base>

@@ -1,27 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
+import CabecalhoSecao from '../components/CabecalhoSecao.astro';
+import Mascote from '../components/Mascote.astro';
+import Selo from '../components/Selo.astro';
 import { getCollection } from 'astro:content';
 import { SECOES, u } from '../config';
 const itens = (await getCollection('institucional', ({ data }) => !data.rascunho)).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'pt-BR'));
 ---
 <Base titulo={`${SECOES.institucional.rotulo} (${SECOES.institucional.sub})`} descricao="Links de acesso restrito a uma instituição." semIndexar>
   <div class="wrap">
-    <span class="rotulo-sub">{SECOES.institucional.sub}</span>
-    <h1 class="titulo-pagina">{SECOES.institucional.rotulo}</h1>
-    <p class="aviso">Os links abaixo são de <strong>acesso restrito</strong>. Quem não tiver conta na instituição verá uma tela de login: isso é esperado, não é erro do site. O material livre está em <a href={u(SECOES.ferramentas.href)}>{SECOES.ferramentas.rotulo} ({SECOES.ferramentas.sub})</a>.</p>
+    <CabecalhoSecao rotulo={SECOES.institucional.rotulo} sub={SECOES.institucional.sub} mascote={SECOES.institucional.mascote} />
+    <p class="aviso">Os links abaixo levam a sistemas de <strong>acesso restrito</strong> (ex.: SharePoint). Nenhum documento fica guardado neste site: quem não tiver conta na instituição verá uma tela de login — isso é esperado, não é erro. O material livre está em <a href={u(SECOES.ferramentas.href)}>{SECOES.ferramentas.rotulo} ({SECOES.ferramentas.sub})</a>.</p>
     {itens.length ? (
       <div class="grade-itens">
         {itens.map((i) => (
           <article class="placa item">
-            <div class="tags"><span class="tag tag--laranja">[ACESSO RESTRITO]</span></div>
+            <div class="tags"><Selo cor="laranja">[ACESSO RESTRITO]</Selo><Selo cor="ciano">EXTERNO ↗</Selo></div>
             <h3>{i.data.nome}</h3>
             <p>{i.data.resumo}</p>
-            <a class="btn btn--sec" href={i.data.url}>Entrar com conta institucional</a>
+            <a class="btn btn--sec" href={i.data.url}>Entrar com conta institucional<span class="visualmente-oculto"> — {i.data.nome}</span></a>
           </article>
         ))}
       </div>
     ) : (
-      <div class="placa vazio"><img src={u('mascote/mascote-organizador-400.webp')} alt="" /><p>Nenhum item cadastrado.</p></div>
+      <div class="placa vazio"><Mascote nome="organizador" /><p>Nenhum item cadastrado.</p></div>
     )}
   </div>
 </Base>

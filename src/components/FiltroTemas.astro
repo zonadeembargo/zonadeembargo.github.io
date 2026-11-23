@@ -1,0 +1,11 @@
+---
+// Chips de navegação por tema, usados em /textos/ e /categoria/*.
+import { CATEGORIAS, u } from '../config';
+interface Props { atual?: string }
+const { atual } = Astro.props;
+---
+<nav class="chips" aria-label="Temas">
+  <a href={u('textos/')} aria-current={!atual ? 'page' : undefined}>TODOS</a>
+  {Object.entries(CATEGORIAS).map(([k, c]) => <a class={`chip--${c.cor}`} href={u(`categoria/${k}/`)} aria-current={k === atual ? 'page' : undefined}>{c.rotulo}</a>)}
+  <a href={u('busca/')}>⌕ BUSCAR</a>
+</nav>

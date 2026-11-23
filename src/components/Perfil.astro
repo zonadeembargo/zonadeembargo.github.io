@@ -23,7 +23,7 @@ const ultimaBR = ultima ? new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC' }).
     <ul>
       {Object.entries(CATEGORIAS).map(([k, c]) => {
         const n = textos.filter((t) => t.data.categoria === k).length;
-        return (<li class={c.cor}><a href={u(`categoria/${k}/`)} style="color:var(--texto);text-decoration:none">{c.rotulo}</a><span class="b" aria-hidden="true"><i style={`width:${(n / maior) * 100}%`}></i></span><span>{n}</span></li>);
+        return (<li class={c.cor}><a class="telemetria__link" href={u(`categoria/${k}/`)}>{c.rotulo}</a><span class="b" aria-hidden="true"><i style={`width:${(n / maior) * 100}%`}></i></span><span>{n}</span></li>);
       })}
     </ul>
   </div>

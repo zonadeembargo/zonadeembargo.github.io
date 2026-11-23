@@ -1,25 +1,24 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Card from '../../components/Card.astro';
+import CabecalhoSecao from '../../components/CabecalhoSecao.astro';
+import FiltroTemas from '../../components/FiltroTemas.astro';
 import { getCollection } from 'astro:content';
-import { CATEGORIAS, u } from '../../config';
+import { CATEGORIAS, type CategoriaChave } from '../../config';
 export function getStaticPaths() {
   return Object.keys(CATEGORIAS).map((cat) => ({ params: { cat } }));
 }
-const { cat } = Astro.params;
-const info = CATEGORIAS[cat as keyof typeof CATEGORIAS];
+const cat = Astro.params.cat as CategoriaChave;
+const info = CATEGORIAS[cat];
 const todos = (await getCollection('textos', ({ data }) => data.categoria === cat && (!data.rascunho || import.meta.env.DEV)))
   .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
 ---
 <Base titulo={info.rotulo} descricao={info.descricao}>
   <div class="wrap">
-    <h1 class="titulo-pagina">{info.rotulo}</h1>
-    <p class="sub">{info.descricao}</p>
-    <nav class="chips" aria-label="Temas">
-      <a href={u('textos/')}>TODOS</a>
-      {Object.entries(CATEGORIAS).map(([k, c]) => <a href={u(`categoria/${k}/`)} aria-current={k === cat ? 'page' : undefined}>{c.rotulo}</a>)}
-    </nav>
-    <div class="lista" style="margin-top:1.4rem">
+    <CabecalhoSecao rotulo={info.rotulo} sub="Tema" descricao={info.descricao} mascote={info.mascote}>
+      <FiltroTemas atual={cat} />
+    </CabecalhoSecao>
+    <div class="lista">
       {todos.length ? todos.map((t) => <Card entry={t} />) : <p class="sub">Ainda não há textos neste tema.</p>}
     </div>
   </div>

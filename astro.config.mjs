@@ -7,5 +7,7 @@ export default defineConfig({
   site: process.env.SITE || 'http://localhost:4321',
   base: process.env.BASE || '/',
   trailingSlash: 'always',
+  // Notas de rodapé ([^1]) com rótulos em português.
+  markdown: { remarkRehype: { footnoteLabel: 'Notas', footnoteBackLabel: 'Voltar ao texto' } },
   integrations: [sitemap({ filter: (pagina) => !pagina.includes('/institucional/') })],
 });

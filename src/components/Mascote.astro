@@ -1,0 +1,9 @@
+---
+// Mascote com dimensões corretas. Uso: <Mascote nome="guia" />  (alt vazio = decorativo)
+import { MASCOTES, u, type Mascote } from '../config';
+interface Props { nome: Mascote; alt?: string; class?: string; ansioso?: boolean }
+const { nome, alt = '', class: classe, ansioso = false } = Astro.props;
+const [w, h] = MASCOTES[nome];
+---
+<img class={classe} src={u(`mascote/mascote-${nome}-400.webp`)} srcset={`${u(`mascote/mascote-${nome}-400.webp`)} 1x, ${u(`mascote/mascote-${nome}-800.webp`)} 2x`}
+  alt={alt} width={w} height={h} loading={ansioso ? 'eager' : 'lazy'} decoding="async" />

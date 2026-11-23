@@ -1,8 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Mascote from '../../components/Mascote.astro';
+import Selo from '../../components/Selo.astro';
+import Relacionados from '../../components/Relacionados.astro';
 import { getCollection, render } from 'astro:content';
-import { Image } from 'astro:assets';
-import { SITE, CATEGORIAS, u, dataBR } from '../../config';
+import { Image, getImage } from 'astro:assets';
+import { SITE, CATEGORIAS, u, dataBR, slug, minutosLeitura } from '../../config';
 
 export async function getStaticPaths() {
   const todos = await getCollection('textos', ({ data }) => !data.rascunho || import.meta.env.DEV);
@@ -10,33 +13,64 @@ export async function getStaticPaths() {
 }
 const { entry } = Astro.props;
 const d = entry.data;
-const cat = CATEGORIAS[d.categoria as keyof typeof CATEGORIAS];
+const cat = CATEGORIAS[d.categoria];
 const { Content } = await render(entry);
 const canonico = new URL(u(`textos/${entry.id}/`), Astro.site).href;
-const minutos = Math.max(1, Math.round((entry.body ?? '').split(/\s+/).length / 200));
+const minutos = minutosLeitura(entry.body);
+// Imagem de compartilhamento: a capa (recortada em 1200x630) ou a imagem padrão do site.
+const og = d.capa ? (await getImage({ src: d.capa, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : undefined;
 ---
-<Base titulo={d.titulo} descricao={d.resumo} semIndexar={d.rascunho}>
+<Base titulo={d.titulo} descricao={d.resumo} imagem={og} semIndexar={d.rascunho}
+  artigo={{ publicado: d.data, atualizado: d.atualizado, autor: d.autor, secao: cat.rotulo, tags: d.tags }}>
   <div class="wrap">
-    <article class="artigo">
+    <article class="artigo" data-pagefind-body>
       <header>
-        {d.rascunho && <p class="aviso">RASCUNHO — visível apenas no seu computador. Troque <code>rascunho: true</code> por <code>false</code> para publicar.</p>}
-        <a class={`tag tag--${cat.cor}`} href={u(`categoria/${d.categoria}/`)}>[{cat.rotulo}]</a>
+        {d.rascunho && <p class="aviso" data-pagefind-ignore>RASCUNHO — visível apenas no seu computador. Troque <code>rascunho: true</code> por <code>false</code> para publicar.</p>}
+        <div class="selos" data-pagefind-ignore>
+          <Selo cor={cat.cor} href={u(`categoria/${d.categoria}/`)}>[{cat.rotulo}]</Selo>
+          <Selo titulo={`Licença ${SITE.licenca}`}>DOC. ABERTO · {SITE.licenca}</Selo>
+        </div>
+        <p hidden data-pagefind-filter="tema">{cat.rotulo}</p>
         <h1>{d.titulo}</h1>
-        <p class="meta">
-          <time datetime={d.data.toISOString()}>{dataBR(d.data)}</time>
-          {d.atualizado && <> · atualizado em {dataBR(d.atualizado)}</>}
-          · {minutos} min de leitura
-        </p>
+        <p class="lead">{d.resumo}</p>
+        <dl class="hud" data-pagefind-ignore>
+          <div><dt>AUTOR</dt><dd>{d.autor}</dd></div>
+          <div><dt>EMITIDO</dt><dd><time datetime={d.data.toISOString()}>{dataBR(d.data)}</time></dd></div>
+          {d.atualizado && <div><dt>REVISADO</dt><dd><time datetime={d.atualizado.toISOString()}>{dataBR(d.atualizado)}</time></dd></div>}
+          <div><dt>LEITURA</dt><dd>{minutos} min</dd></div>
+        </dl>
       </header>
-      {d.capa && <Image src={d.capa} alt="" widths={[760, 1520]} sizes="760px" style="margin-bottom:1.5rem;border:1px solid var(--linha)" />}
+      {d.capa && (
+        <figure class="capa-artigo">
+          <Image src={d.capa} alt={d.capaAlt ?? ''} widths={[760, 1520]} sizes="(min-width: 800px) 760px, 100vw" loading="eager" />
+        </figure>
+      )}
       <div class="prosa"><Content /></div>
-      <footer class="fim">
-        <img src={u('mascote/mascote-guia-400.webp')} alt="" loading="lazy" />
-        <p>Fim do texto. Licença <a href={SITE.licencaUrl} rel="license">{SITE.licenca}</a>: pode copiar, adaptar e redistribuir, citando a fonte e mantendo a mesma licença.
+
+      {d.referencias.length > 0 && (
+        <section class="referencias" aria-labelledby="ref-titulo">
+          <h2 id="ref-titulo">Referências</h2>
+          <ol>
+            {d.referencias.map((r) => <li>{r.url ? <a href={r.url}>{r.titulo}</a> : r.titulo}</li>)}
+          </ol>
+        </section>
+      )}
+
+      {d.tags.length > 0 && (
+        <nav class="tags-artigo" aria-label="Etiquetas do texto" data-pagefind-ignore>
+          <span class="meta">ETIQUETAS:</span>
+          {d.tags.map((t) => <a class="chip" href={u(`tags/${slug(t)}/`)}>#{t}</a>)}
+        </nav>
+      )}
+
+      <footer class="fim" data-pagefind-ignore>
+        <Mascote nome={cat.mascote} />
+        <p>Fim da transmissão. Licença <a href={SITE.licencaUrl} rel="license">{SITE.licenca}</a>: pode copiar, adaptar e redistribuir, citando a fonte e mantendo a mesma licença.
           <span class="canonico">Publicado originalmente em <a href={canonico}>{canonico}</a></span>
           {d.substack && <span class="canonico">Também no Substack: <a href={d.substack}>{d.substack}</a></span>}
           <a href={u('textos/')}>← Voltar aos textos</a></p>
       </footer>
     </article>
+    <div class="artigo" data-pagefind-ignore><Relacionados entry={entry} /></div>
   </div>
 </Base>

@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { SITE } from '../config';
+import { SITE, CATEGORIAS } from '../config';
 
 export async function GET(context) {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -15,6 +15,7 @@ export async function GET(context) {
       pubDate: t.data.data,
       description: t.data.resumo,
       link: `${base}/textos/${t.id}/`,
+      categories: [CATEGORIAS[t.data.categoria].rotulo, ...t.data.tags],
     })),
     customData: '<language>pt-br</language>',
   });

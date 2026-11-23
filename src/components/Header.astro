@@ -1,5 +1,5 @@
 ---
-import { SITE, NAV, u } from '../config';
+import { SITE, NAV, SECOES, u } from '../config';
 const atual = Astro.url.pathname;
 const ativo = (href: string) => (href === '' ? atual === u() : atual.startsWith(u(href)));
 ---
@@ -16,6 +16,9 @@ const ativo = (href: string) => (href === '' ? atual === u() : atual.startsWith(
       {NAV.map((i) => (
         <a href={u(i.href)} aria-current={ativo(i.href) ? 'page' : undefined}>{i.rotulo}<small>{i.sub}</small></a>
       ))}
+      <a class="nav__busca" href={u(SECOES.busca.href)} aria-current={ativo(SECOES.busca.href) ? 'page' : undefined}>
+        <span aria-hidden="true">⌕</span><small>{SECOES.busca.sub}</small>
+      </a>
     </nav>
   </div>
   <div class="barras" aria-hidden="true"><i></i><i></i></div>
