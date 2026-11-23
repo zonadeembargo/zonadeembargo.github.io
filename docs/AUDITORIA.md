@@ -36,5 +36,6 @@ O navegador embutido registrou saltos de layout de 0,4 a 1,0 na primeira visita,
 
 ## Pendências
 
-- Rodar o **PageSpeed Insights** (pagespeed.web.dev) no endereço publicado, que mede com o Chrome real e rede móvel simulada.
+- Rodar o **PageSpeed Insights** em <https://pagespeed.web.dev/analysis?url=https://zonadeembargo.github.io/> (mede com o Chrome real e rede móvel simulada). Em 2026-11-23 a API gratuita estava sem cota, então a medição ficou para ser feita pelo navegador.
+- Conferido no ar em 2026-11-23: rotas principais (200), página 404, RSS, imagem de compartilhamento, `canonical` e busca (`/busca/?q=colapso` → 1 resultado).
 - Repetir esta auditoria sempre que houver mudança de layout ou componentes novos.

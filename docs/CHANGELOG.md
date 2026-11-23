@@ -42,3 +42,8 @@ Formato: data · versão · o que mudou. Detalhes de cada passo em `git log`.
 - Nova imagem de compartilhamento (`public/img/og.jpg`, 1200×630): emblema + arte do topo. A anterior está em `docs/identidade/og-anterior.jpg`.
 - Auditoria automática de acessibilidade e desempenho (ver `docs/AUDITORIA.md`): hierarquia de títulos corrigida, filtro da busca com nome acessível, contraste AA no cabeçalho (`--laranja-claro`), fontes pré-carregadas. 0 violações axe em 13 páginas.
 - Cabeçalho invertido: **ZONA DE EMBARGO** como título e "por Gilberto Milhomem" como assinatura; título da home e do RSS seguem o projeto.
+
+## 2026-11-23 · publicação
+- Organização **zonadeembargo** no GitHub; repositório `zonadeembargo/zonadeembargo.github.io`; site no ar em <https://zonadeembargo.github.io/>.
+- Histórico regravado com o e-mail privado do GitHub (`…@users.noreply.github.com`) antes do primeiro envio.
+- GitHub Pages no modo "GitHub Actions": cada envio para `main` roda `npm run verificar` e só publica se passar (primeira publicação: ~45 s).
