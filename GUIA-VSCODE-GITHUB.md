@@ -10,7 +10,7 @@ No terminal:
 
 ```bash
 sudo pacman -S nodejs npm git
-node -v      # precisa mostrar v20 ou superior
+node -v      # precisa mostrar v22.12 ou superior
 git --version
 ```
 
@@ -80,22 +80,24 @@ Para não expor o e-mail pessoal nos commits, no GitHub abra *Settings → Email
 
 ### B4. Enviar pelo VS Code (caminho mais simples)
 
-1. Abra a aba **Source Control** (`Ctrl+Shift+G`).
-2. Clique em **Initialize Repository**. Os arquivos aparecem em *Changes*. (`node_modules` não aparece: está no `.gitignore`.)
-3. Escreva a mensagem `primeira versão` e clique em **Commit**. Se perguntar sobre "stage all changes", confirme *Yes*.
-4. Clique em **Publish Branch** (ou "Publish to GitHub"). O VS Code pede para entrar no GitHub pelo navegador; autorize.
-5. Escolha o nome do repositório e **Public**. Deixe marcados todos os arquivos, inclusive `.github`.
+A pasta `site/` **já é um repositório Git**, com o histórico da evolução (veja `git log` ou a aba *Source Control → Graph*). Não clique em *Initialize Repository*.
 
-**Alternativa por terminal** (depois de criar o repositório vazio em github.com → *New*):
+1. Abra a aba **Source Control** (`Ctrl+Shift+G`).
+2. Clique em **Publish Branch** (ou "Publish to GitHub"). O VS Code pede para entrar no GitHub pelo navegador; autorize.
+3. Escolha o nome do repositório e **Public**.
+
+**Alternativa por terminal** (depois de criar o repositório **vazio** em github.com → *New*, sem README):
 
 ```bash
-git init
-git add .
-git commit -m "primeira versão"
-git branch -M main
 git remote add origin https://github.com/SEU-USUARIO/NOME-DO-REPOSITORIO.git
 git push -u origin main
 ```
+
+- `git remote add origin URL`: registra o endereço do GitHub com o apelido `origin`. Confira com `git remote -v`.
+- `git push -u origin main`: envia o ramo `main` para `origin`; o `-u` memoriza a ligação, e nas próximas vezes basta `git push`.
+- Resultado esperado: a página do repositório mostra os arquivos e, em *Commits*, todo o histórico.
+
+> **E-mail nos commits.** Os commits locais foram feitos com o e-mail configurado nesta pasta (`git config user.email`). Se quiser usar o endereço privado `...@users.noreply.github.com` (B2) **antes do primeiro push**, rode `git config user.email "SEU@users.noreply.github.com"` e depois `git rebase --root --exec "git commit --amend --no-edit --reset-author"` para regravar os commits com o novo e-mail.
 
 (O GitHub pede login; use o navegador ou um *Personal Access Token* como senha.)
 
@@ -113,7 +115,7 @@ git push -u origin main
 
 ## C. Rotina depois da primeira vez
 
-1. Abra a pasta no VS Code e (se quiser ver antes) rode `npm run dev`.
+1. Abra a pasta no VS Code e (se quiser ver antes) rode `npm run dev`. Antes de enviar mudanças de código ou configuração, rode `npm run verificar`.
 2. Crie ou edite os arquivos (por exemplo, um texto novo em `src/content/textos/`).
 3. **Source Control** → escreva uma mensagem curta (ex.: `novo texto sobre X`) → **Commit** → **Sync Changes** (ou *Push*).
 4. Em 1 a 3 minutos o site está atualizado. Para republicar no Substack, siga a seção 4 do `MANUAL.md`.
@@ -128,4 +130,5 @@ git push -u origin main
 | O VS Code não pede login do GitHub | Use a alternativa por terminal (B4) |
 | `git push` rejeitado | O repositório do GitHub já tem arquivos (ex.: um README criado lá). Crie-o vazio ou rode `git pull --rebase origin main` e tente de novo |
 | Action falha com erro de conteúdo | Leia a mensagem: ela aponta o arquivo e o campo (geralmente o cabeçalho de um texto) |
+| Action falha em "link interno quebrado" | O verificador achou um link para página inexistente; a mensagem mostra qual. Nada foi publicado: o site antigo continua no ar |
 | Site abre sem estilo ou imagens | Confirme *Source: GitHub Actions* em Settings → Pages e rode a Action de novo |

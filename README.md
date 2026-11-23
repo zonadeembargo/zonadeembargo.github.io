@@ -1,8 +1,32 @@
-# Site pessoal (Astro)
+# Zona de Embargo — site pessoal (Astro)
 
-Site estático, textos em Markdown, publicação automática no GitHub Pages.
+Terminal de pesquisa eco-cyber-punk: textos em Markdown, ferramentas livres, manifesto e acesso institucional. Site estático (sem banco de dados, sem servidor, zero JavaScript fora da busca), publicado de graça no GitHub Pages.
 
-- **Manual completo:** [`MANUAL.md`](MANUAL.md)
-- **Ver no VS Code e subir ao GitHub:** [`GUIA-VSCODE-GITHUB.md`](GUIA-VSCODE-GITHUB.md)
-- Novo texto: `npm run novo -- "Título" cartografia` (ou crie um `.md` em `src/content/textos/`)
-- Pré-visualizar: `npm install` e `npm run dev`
+## Comandos
+
+| Comando | O que faz |
+|---|---|
+| `npm ci` | Instala as dependências nas versões exatas do `package-lock.json` (uma vez) |
+| `npm run dev` | Site em `http://localhost:4321`, com rascunhos e recarga automática (busca desativada) |
+| `npm run novo -- "Título" cartografia` | Cria um texto novo como rascunho (`cartografia`, `cronicas` ou `tecno`) |
+| `npm run verificar` | Checagem completa: tipos + build + busca + links internos (o mesmo que o GitHub roda) |
+| `npm run build` | Gera o site em `dist/` e o índice de busca em `dist/pagefind/` |
+| `npm run preview` | Serve o `dist/` localmente (com busca) |
+
+Requer Node.js 22.12+.
+
+## Documentação
+
+- **[`MANUAL.md`](MANUAL.md)** — publicar, editar, campos dos textos, downloads, problemas comuns.
+- **[`GUIA-VSCODE-GITHUB.md`](GUIA-VSCODE-GITHUB.md)** — ver no VS Code e enviar ao GitHub.
+- **[`docs/ARQUITETURA.md`](docs/ARQUITETURA.md)** — como o site funciona por dentro, decisões técnicas, manutenção.
+- **[`docs/CHANGELOG.md`](docs/CHANGELOG.md)** — histórico das mudanças.
+- **[`LICENCAS.md`](LICENCAS.md)** — licença por tipo de material.
+
+## Onde mexer
+
+- Textos: `src/content/textos/*.md` (modelo comentado em `_modelo.md`)
+- Páginas: `src/content/paginas/` (`sobre.md`, `manifesto.md`, `licencas.md`)
+- Downloads: `src/content/ferramentas/` + arquivos em `public/downloads/`
+- Nomes, menus, categorias, canais, mascotes por seção: `src/config.ts`
+- Cores e fontes: bloco `:root` de `src/styles/global.css`

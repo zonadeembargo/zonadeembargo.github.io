@@ -13,13 +13,16 @@ Este manual cobre tudo, da primeira publicação à rotina de atualização. Foi
 | Onde | O que é | Você edita? |
 |---|---|---|
 | `src/content/textos/` | Os textos do site (um arquivo por texto) | **Sempre** |
-| `src/content/paginas/` | Páginas simples: `sobre.md` (Dossiê) e `licencas.md`. Um arquivo novo aqui vira uma página nova em `/nome/` | Às vezes |
+| `src/content/paginas/` | Páginas simples: `sobre.md` (Dossiê), `manifesto.md` e `licencas.md`. Um arquivo novo aqui vira uma página nova em `/nome/` | Às vezes |
 | `src/content/ferramentas/` | Ferramentas de download livre (um arquivo por item) | Às vezes |
 | `src/content/institucional/` | Links de acesso restrito (um arquivo por item) | Raramente |
 | `src/assets/textos/` | Imagens usadas dentro dos textos | Ao ilustrar |
+| `src/assets/hero.webp` | Imagem do destaque da página inicial (o site gera versões AVIF/WebP menores) | Quase nunca |
+| `public/downloads/` | Arquivos para baixar no ARSENAL (zip, pdf, qgz) | Às vezes |
 | `src/config.ts` | **Nome do site, menus, categorias, links (Substack, apoio), licença, aviso** | Raramente |
 | `src/styles/global.css` | Cores e aparência (variáveis no topo do arquivo) | Quase nunca |
-| `public/` | Logo, favicon, mascotes, imagem do topo (`img/hero.webp`) e de compartilhamento (`img/og.jpg`) | Quase nunca |
+| `public/` | Logo, favicon, mascotes e imagem de compartilhamento (`img/og.jpg`) | Quase nunca |
+| `docs/` | Arquitetura e histórico de mudanças (`ARQUITETURA.md`, `CHANGELOG.md`) | Para consulta |
 | `.github/workflows/deploy.yml` | A automação de publicação | **Não mexer** |
 
 Arquivos cujo nome começa com `_` (como `_modelo.md`) **não aparecem no site**: servem de modelo para copiar.
@@ -31,7 +34,7 @@ Arquivos cujo nome começa com `_` (como `_modelo.md`) **não aparecem no site**
 1. Crie uma conta em github.com e um **repositório novo** (botão *New*). Pode ser público.
    - Para o endereço `https://SEU-USUARIO.github.io/`, o repositório deve se chamar exatamente `SEU-USUARIO.github.io`.
    - Com qualquer outro nome (ex.: `meu-site`), o endereço será `https://SEU-USUARIO.github.io/meu-site/`. Tudo funciona igual; os links se ajustam sozinhos.
-2. Envie os arquivos deste projeto para o repositório. O caminho mais simples: na página do repositório, *Add file → Upload files* e arraste **o conteúdo** da pasta do projeto (não o `.zip`; a pasta oculta `.github` precisa ir junto). Se preferir Git no terminal: `git init`, `git add .`, `git commit -m "primeira versão"`, `git branch -M main`, `git remote add origin ENDERECO`, `git push -u origin main`.
+2. Envie o projeto ao repositório. **A pasta `site/` já é um repositório Git** (com histórico desde a V2), então basta ligá-la ao GitHub e enviar: `git remote add origin ENDERECO` e `git push -u origin main` (detalhes em `GUIA-VSCODE-GITHUB.md`, B4). Não use o upload pelo navegador: ele perderia o histórico.
 3. No repositório: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 4. Aba **Actions**: a publicação roda sozinha (círculo amarelo → ✔ verde). Ao terminar, o endereço aparece em Settings → Pages.
 5. Abra o endereço e confira. Se der erro, veja a seção 9.
@@ -76,11 +79,37 @@ Aqui começa o texto.
 | `titulo` | sim | Entre aspas |
 | `resumo` | sim | Entre aspas; até ~160 caracteres |
 | `data` | sim | `aaaa-mm-dd` |
-| `categoria` | sim | `cartografia`, `tecno`, `cronicas` ou `tecno` |
+| `categoria` | sim | `cartografia`, `cronicas` ou `tecno` |
+| `tags` | não | Etiquetas livres: `[Amazônia, dados abertos]`. Cada uma ganha página em `/tags/<nome>/` |
 | `rascunho` | não | `true` = não publica (aparece só no `npm run dev`) |
-| `atualizado` | não | `aaaa-mm-dd`; mostra "atualizado em" |
+| `destaque` | não | `true` = vai para o topo da página inicial (vale o mais recente marcado; sem nenhum, o texto mais novo) |
+| `autor` | não | Padrão: `SITE.nome` de `config.ts` |
+| `atualizado` | não | `aaaa-mm-dd`; mostra "REVISADO" no cabeçalho do texto |
 | `substack` | não | Endereço da cópia no Substack; mostra "Também no Substack" |
-| `capa` | não | Imagem do card e do topo do texto (veja abaixo) |
+| `capa` | não | Imagem do card, do topo do texto **e da prévia nas redes sociais** (veja abaixo) |
+| `capaAlt` | se houver capa | Descrição da capa para leitores de tela. Sem ela, a publicação falha de propósito |
+| `referencias` | não | Lista de fontes exibida no bloco REFERÊNCIAS (veja abaixo) |
+
+O modelo completo, com todos os campos comentados, está em `src/content/textos/_modelo.md`.
+
+### Referências e notas de rodapé
+
+Duas formas, que podem ser usadas juntas:
+
+```md
+---
+referencias:
+  - titulo: "IBGE. Malha municipal 2024."
+    url: "https://www.ibge.gov.br/"
+  - titulo: "Autor, Obra, ano (sem link)."
+---
+
+Uma afirmação que precisa de nota.[^1]
+
+[^1]: Texto da nota. Aparece no fim, na seção "Notas", com link de volta.
+```
+
+Notas de rodapé seguem o padrão do Obsidian e do GitHub, então o mesmo arquivo funciona nos três lugares. Links internos do Obsidian no formato `[[nome]]` **não** funcionam no site: use links Markdown normais (`[texto](../outro-texto/)`).
 
 > **Cuidado com as aspas.** Se o título tiver dois-pontos ou aspas, mantenha o título inteiro entre aspas duplas. Um erro no cabeçalho faz a publicação falhar (a aba *Actions* mostra o arquivo e a linha com problema).
 
@@ -106,7 +135,7 @@ Os arquivos `exemplo-*.md` mostram tabelas, listas e imagens funcionando. **Apag
 
 1. Coloque o arquivo em `src/assets/textos/` (no GitHub: *Add file → Upload files*). Nome sem acentos nem espaços. JPG, PNG ou WebP.
 2. No texto: `![Descrição do que a imagem mostra](../../assets/textos/mapa-exemplo.jpg)`. A descrição é lida por leitores de tela, então escreva-a sempre.
-3. Para capa, no cabeçalho: `capa: ../../assets/textos/mapa-exemplo.jpg`.
+3. Para capa, no cabeçalho: `capa: ../../assets/textos/mapa-exemplo.jpg` **e** `capaAlt: "O que a imagem mostra"`. A capa também vira a imagem de prévia ao compartilhar o link (recortada em 1200×630).
 
 O site reduz e converte as imagens automaticamente. Mesmo assim, não envie arquivos acima de ~3 MB. Sem `capa`, o card usa o mascote da categoria.
 
@@ -150,24 +179,33 @@ Tudo em `src/config.ts`, com comentários. Principais campos:
 
 O menu mostra o nome de fantasia e, pequeno abaixo, o nome convencional. Tudo em `SECOES`, no `src/config.ts`:
 
-| Fantasia | Convencional | Endereço |
-|---|---|---|
-| TERMINAL | Início | `/` |
-| TRANSMISSÕES | Textos | `/textos/` |
-| ARSENAL | Ferramentas | `/ferramentas/` |
-| DOSSIÊ | Sobre | `/sobre/` |
-| COFRE | Acesso institucional (só no rodapé) | `/institucional/` |
-| LICENÇAS | Direitos e uso (rodapé) | `/licencas/` |
+| Fantasia | Convencional | Endereço | Mascote |
+|---|---|---|---|
+| TERMINAL | Início | `/` | apresentador |
+| TRANSMISSÕES | Textos | `/textos/` | leitor |
+| ARSENAL | Ferramentas | `/ferramentas/` | pesquisador |
+| DOSSIÊ | Sobre | `/sobre/` | tutor |
+| MANIFESTO | Princípios (home e rodapé) | `/manifesto/` | escritor |
+| VARREDURA | Busca (ícone ⌕ no menu) | `/busca/` | pesquisador |
+| COFRE | Acesso institucional (só no rodapé) | `/institucional/` | organizador |
+| LICENÇAS | Direitos e uso (rodapé) | `/licencas/` | tutor |
 
-Para trocar, por exemplo, DOSSIÊ por MANIFESTO: mude `rotulo: 'DOSSIÊ'` para `rotulo: 'MANIFESTO'`. O endereço (`/sobre/`) é o nome do arquivo e não muda. O título que aparece na própria página Sobre vem do campo `titulo` em `src/content/paginas/sobre.md`.
+Cada tema também tem mascote próprio (em `CATEGORIAS`): Cartografia = guia, Crônicas = escritor, Tecno = tira-dúvidas; o 404 usa o tira-dúvidas. Para trocar a pose de uma seção, mude o campo `mascote` (as opções estão em `MASCOTES`, no mesmo arquivo).
 
-### Página "Sobre" e outras páginas simples
+Para trocar, por exemplo, DOSSIÊ por ARQUIVO: mude `rotulo: 'DOSSIÊ'` para `rotulo: 'ARQUIVO'`. O endereço (`/sobre/`) é o nome do arquivo e não muda. O título que aparece na própria página Sobre vem do campo `titulo` em `src/content/paginas/sobre.md`.
 
-Edite `src/content/paginas/sobre.md` (Markdown; campos `titulo` e `sub` no cabeçalho). Para uma página nova (ex.: "Contato"), crie `src/content/paginas/contato.md` com `titulo`; ela aparece em `/contato/`. Para ela entrar no menu, adicione um item em `SECOES` e `NAV`, em `src/config.ts`.
+### Página "Sobre", Manifesto e outras páginas simples
 
-### Ferramentas livres
+Edite `src/content/paginas/sobre.md` ou `manifesto.md` (Markdown; campos `titulo`, `sub` e `descricao` no cabeçalho). O manifesto vem com um **esqueleto** (princípios, posicionamentos, objetivos editoriais, referências): o texto é seu. Para uma página nova (ex.: "Contato"), crie `src/content/paginas/contato.md` com `titulo`; ela aparece em `/contato/`. Para ela entrar no menu, adicione um item em `SECOES` e `NAV`, em `src/config.ts`.
 
-Um arquivo por ferramenta em `src/content/ferramentas/`. Copie `exemplo-ferramenta.md`, renomeie e preencha `nome`, `resumo`, `url`, `tipo`, `licenca`, `versao`. Para retirar uma ferramenta, apague o arquivo ou use `rascunho: true`. O `url` pode ser um link de *Releases* do GitHub (recomendado, pois mantém histórico de versões).
+### Ferramentas livres (downloads)
+
+Um arquivo por ferramenta em `src/content/ferramentas/`. Copie `exemplo-ferramenta.md`, renomeie e preencha `nome`, `resumo`, `url`, `tipo`, `licenca`, `versao`, e os opcionais `acesso` (`livre` ou `login`, quando o site de destino pede conta) e `codigo` (endereço do código-fonte).
+
+- **Link externo:** `url: "https://..."`. Aparece o selo EXTERNO ↗.
+- **Arquivo no próprio site:** coloque o arquivo em `public/downloads/` e use `url: "downloads/nome-do-arquivo.zip"`. Aparece o selo ARQUIVO LOCAL e o botão baixa direto. Evite arquivos grandes (>50 MB): prefira *Releases* do GitHub.
+
+Qualquer outro formato de `url` faz a publicação falhar com uma mensagem clara. Para retirar uma ferramenta, apague o arquivo ou use `rascunho: true`. O `url` pode ser um link de *Releases* do GitHub (recomendado, pois mantém histórico de versões).
 
 ### Acesso institucional (links restritos)
 
@@ -187,11 +225,11 @@ No início de `src/styles/global.css`, o bloco `:root` guarda as cores (`--ciano
 
 | Arquivo (em `public/`) | Uso | Tamanho sugerido |
 |---|---|---|
-| `img/hero.webp` | Imagem do destaque na página inicial (a arte fica à direita; o lado esquerdo é espaço livre para o título) | 2400×740, WebP, até ~250 KB |
+| `src/assets/hero.webp` (fora de `public/`) | Imagem do destaque na página inicial (a arte fica à direita; o lado esquerdo é espaço livre para o título). O site gera versões de 640 a 2400 px em AVIF e WebP | 2400×740, WebP |
 | `img/og.jpg` | Prévia ao compartilhar o link | 1200×630, JPG |
 | `logo.svg` / `favicon.svg` | Selo do cabeçalho e ícone da aba | SVG |
 | `mascote/avatar.webp` | Foto da lateral | 512×512, WebP |
-| `mascote/mascote-*-400.webp` e `-800.webp` | Poses do mascote (cards, 404, fim de texto) | altura 400 e 800 px |
+| `mascote/mascote-*-400.webp` e `-800.webp` | Poses do mascote (seções, cards, 404, fim de texto) | altura 400 e 800 px. Se mudar as proporções, atualize `MASCOTES` em `config.ts` |
 
 Basta substituir o arquivo mantendo o **mesmo nome**.
 
@@ -220,13 +258,20 @@ O resumo aparece no rodapé e a explicação completa em `/licencas/` (arquivo `
 
 Útil para pré-visualizar antes de publicar.
 
-1. Instale o **Node.js** (versão LTS) em nodejs.org.
-2. Na pasta do projeto: `npm install` (uma vez).
-3. `npm run dev` abre o site em `http://localhost:4321`, com **rascunhos visíveis** e atualização automática a cada salvamento.
-4. `npm run build` gera a versão final em `dist/` (para testar se há erros).
-5. Para enviar: use o GitHub Desktop, o Git no terminal ou o upload pelo navegador.
+1. Instale o **Node.js 22.12 ou superior** (a versão LTS atual serve) em nodejs.org ou pelo gerenciador de pacotes.
+2. Na pasta do projeto: `npm ci` (uma vez; instala exatamente as versões do `package-lock.json`).
+3. `npm run dev` abre o site em `http://localhost:4321`, com **rascunhos visíveis** e atualização automática a cada salvamento. A **busca não funciona** neste modo (o índice só existe depois do build).
+4. `npm run verificar` faz a checagem completa — a mesma que o GitHub roda antes de publicar:
+   - `astro check`: confere tipos e erros nos componentes;
+   - `npm run build`: gera o site em `dist/` e o índice de busca em `dist/pagefind/`;
+   - `npm run links`: confere se todo link interno aponta para uma página que existe.
+   Se terminar com `✔ Nenhum link interno quebrado.`, está pronto para enviar.
+5. `npm run preview` mostra a versão final (com busca) em `http://localhost:4321`.
+6. Para enviar: Source Control do VS Code ou `git push` (veja o guia).
 
-**Manutenção anual (10 minutos):** `npm update`, depois `npm run build`. Se compilar sem erros, envie o `package.json` e o `package-lock.json` atualizados. Se houver erro, desfaça a atualização: o histórico do GitHub permite restaurar os arquivos anteriores.
+**Manutenção (a cada 3–6 meses, 10 minutos):** `npm update`, depois `npm run verificar`. Se passar, faça commit do `package.json` e do `package-lock.json`. Se falhar, `git checkout package.json package-lock.json && npm ci` desfaz tudo. Atualizações de versão principal (ex.: Astro 7 → 8) são feitas à parte, seguindo o guia oficial `docs.astro.build/en/guides/upgrade-to/`; veja `docs/ARQUITETURA.md`.
+
+> O npm 11+ pode avisar `install-scripts` bloqueados (esbuild, sharp). É uma proteção nova do npm; o site funciona normalmente, porque esses pacotes já trazem binários prontos.
 
 ## 8. Backup e segurança
 
@@ -241,7 +286,11 @@ O resumo aparece no rodapé e a explicação completa em `/licencas/` (arquivo `
 | Aba *Actions* com ✖ vermelho | Erro no cabeçalho do texto ou imagem inexistente | Abra a execução e leia a mensagem: ela cita o arquivo e o campo |
 | Texto não aparece | `rascunho: true`, ou nome do arquivo começa com `_` | Corrija; ou espere 3 min |
 | Site sem estilo/imagens | Fonte do Pages não está em GitHub Actions | *Settings → Pages → Source: GitHub Actions* e rode a Action de novo (*Actions → Run workflow*) |
-| Erro de categoria inválida | Categoria escrita diferente da chave em `config.ts` | Use exatamente `cartografia`, `tecno`, `cronicas` ou `tecno` |
+| Erro de categoria inválida | Categoria escrita diferente da chave em `config.ts` | Use exatamente `cartografia`, `cronicas` ou `tecno` |
+| Erro `capaAlt` | Texto tem `capa` sem descrição | Acrescente `capaAlt: "..."` |
+| Erro em `url` | Endereço sem `https://` (ou download fora de `downloads/`) | Corrija o endereço |
+| ✖ link interno quebrado | Um link aponta para página inexistente | A mensagem mostra a página e o link; corrija o `.md` |
+| Busca vazia no `npm run dev` | Índice só existe após o build | Use `npm run build && npm run preview` |
 | Imagem não carrega | Caminho errado ou nome com acento/espaço | Confira `../../assets/textos/` e o nome do arquivo (maiúsculas contam) |
 | Prévia de link com imagem antiga | Cache da rede social | Use o depurador de links da própria rede |
 | Página 404 no endereço | Primeira publicação ainda não terminou | Aguarde a Action e confira o Pages |
@@ -250,7 +299,8 @@ O resumo aparece no rodapé e a explicação completa em `/licencas/` (arquivo `
 
 - [ ] Definir o **nome do projeto** (`SITE.projeto`) e conferir `SITE.nome`.
 - [ ] Preencher `SITE.substack` e `SITE.apoio` (ou deixar vazios).
-- [ ] Reescrever **Sobre** e apagar os `exemplo-*.md` e a ferramenta de exemplo.
+- [ ] Reescrever **Sobre** e **Manifesto**; apagar os `exemplo-*.md` e a ferramenta de exemplo.
+- [ ] Preencher `SITE.apresentacao` e `SITE.canais` (ou deixar vazios).
 - [ ] Conferir o aviso do rodapé e a página **Licenças** (CC BY-SA 4.0 / GPL-3.0 / direitos reservados para identidade).
 - [ ] Conferir fontes e números de cada texto (registre fonte, data de acesso e método).
 - [ ] Consultar a chefia/Comissão de Ética sobre manifestação pública, uso de farda/insígnias na imagem e divulgação de links institucionais.
