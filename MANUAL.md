@@ -227,7 +227,10 @@ No início de `src/styles/global.css`, o bloco `:root` guarda as cores (`--ciano
 |---|---|---|
 | `src/assets/hero.webp` (fora de `public/`) | Imagem do destaque na página inicial (a arte fica à direita; o lado esquerdo é espaço livre para o título). O site gera versões de 640 a 2400 px em AVIF e WebP | 2400×740, WebP |
 | `img/og.jpg` | Prévia ao compartilhar o link | 1200×630, JPG |
-| `logo.svg` / `favicon.svg` | Selo do cabeçalho e ícone da aba | SVG |
+| `emblema-120.webp` / `emblema-240.webp` | Emblema do cabeçalho (versão normal e para telas densas), fundo transparente | 120 e 240 px, WebP |
+| `favicon-32.png` / `apple-touch-icon.png` | Ícone da aba e do atalho no celular | 32 e 180 px |
+
+O emblema original em alta resolução fica em `docs/identidade/emblema-original.webp`; os logos anteriores ficam na mesma pasta, só como registro.
 | `mascote/avatar.webp` | Foto da lateral | 512×512, WebP |
 | `mascote/mascote-*-400.webp` e `-800.webp` | Poses do mascote (seções, cards, 404, fim de texto) | altura 400 e 800 px. Se mudar as proporções, atualize `MASCOTES` em `config.ts` |
 

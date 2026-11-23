@@ -42,7 +42,7 @@ site/
 ├── public/                        copiado sem alteração para dist/
 │   ├── mascote/                   8 poses (400/800 px, WebP com transparência) + avatar
 │   ├── downloads/                 arquivos baixáveis do PAIOL
-│   └── img/og.jpg, logo.svg, favicon.svg
+│   └── img/og.jpg, emblema-120/240.webp, favicon-32.png, apple-touch-icon.png
 ├── scripts/
 │   ├── novo.mjs                   cria texto novo
 │   └── verificar-links.mjs        confere links internos de dist/
@@ -60,6 +60,7 @@ site/
 │   ├── pages/                     cada arquivo = uma rota
 │   └── styles/global.css          identidade visual (tokens no :root)
 └── docs/                          esta documentação
+    └── identidade/                emblema original em alta resolução e logos anteriores
 ```
 
 ### Rotas (`src/pages/`)

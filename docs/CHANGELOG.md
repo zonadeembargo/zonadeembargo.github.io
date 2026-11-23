@@ -38,3 +38,4 @@ Formato: data · versão · o que mudou. Detalhes de cada passo em `git log`.
 
 ## 2026-11-22 · ajuste
 - Seção ARSENAL renomeada para **PAIOL** (endereço `/ferramentas/` mantido, para não quebrar links).
+- Novo **emblema** (hexágono verde, foice e martelo, circuitos) no cabeçalho, no favicon e no ícone de celular; fundo externo tornado transparente. Logos anteriores arquivados em `docs/identidade/`.
