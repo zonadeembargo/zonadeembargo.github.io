@@ -18,7 +18,7 @@ Este manual cobre tudo, da primeira publicação à rotina de atualização. Foi
 | `src/content/institucional/` | Links de acesso restrito (um arquivo por item) | Raramente |
 | `src/assets/textos/` | Imagens usadas dentro dos textos | Ao ilustrar |
 | `src/assets/hero.webp` | Imagem do destaque da página inicial (o site gera versões AVIF/WebP menores) | Quase nunca |
-| `public/downloads/` | Arquivos para baixar no ARSENAL (zip, pdf, qgz) | Às vezes |
+| `public/downloads/` | Arquivos para baixar no PAIOL (zip, pdf, qgz) | Às vezes |
 | `src/config.ts` | **Nome do site, menus, categorias, links (Substack, apoio), licença, aviso** | Raramente |
 | `src/styles/global.css` | Cores e aparência (variáveis no topo do arquivo) | Quase nunca |
 | `public/` | Logo, favicon, mascotes e imagem de compartilhamento (`img/og.jpg`) | Quase nunca |
@@ -183,7 +183,7 @@ O menu mostra o nome de fantasia e, pequeno abaixo, o nome convencional. Tudo em
 |---|---|---|---|
 | TERMINAL | Início | `/` | apresentador |
 | TRANSMISSÕES | Textos | `/textos/` | leitor |
-| ARSENAL | Ferramentas | `/ferramentas/` | pesquisador |
+| PAIOL | Ferramentas | `/ferramentas/` | pesquisador |
 | DOSSIÊ | Sobre | `/sobre/` | tutor |
 | MANIFESTO | Princípios (home e rodapé) | `/manifesto/` | escritor |
 | VARREDURA | Busca (ícone ⌕ no menu) | `/busca/` | pesquisador |

@@ -18,7 +18,7 @@ Formato: data · versão · o que mudou. Detalhes de cada passo em `git log`.
 - Exemplos renomeados por categoria (`exemplo-cartografia`, `exemplo-cronicas`, `exemplo-tecno`).
 
 ### Interface e identidade (P1/P2)
-- Home: destaque editorial escolhido por `destaque: true`; painel "canal aberto" com apresentação e atalhos (Manifesto, Dossiê, Arsenal, Busca, RSS, canais externos via `SITE.canais`).
+- Home: destaque editorial escolhido por `destaque: true`; painel "canal aberto" com apresentação e atalhos (Manifesto, Dossiê, Paiol, Busca, RSS, canais externos via `SITE.canais`).
 - Mascotes integrados como identidade de seção (apresentador, leitor, pesquisador, tutor, escritor, organizador); poses antes sem uso agora aparecem.
 - Texto: HUD de metadados, selo de licença, bloco de referências, etiquetas, leitura relacionada.
 - Busca estática com Pagefind (`/busca/`, filtro por tema, `?q=`).
@@ -35,3 +35,6 @@ Formato: data · versão · o que mudou. Detalhes de cada passo em `git log`.
 ### Plataforma
 - Astro 5.18 → 6.4 (Zod 4 via `astro/zod`; URLs aceitas só com http/https).
 - Astro 6.4 → 7.4 (Markdown mantido no processador unified para compatibilidade).
+
+## 2026-11-22 · ajuste
+- Seção ARSENAL renomeada para **PAIOL** (endereço `/ferramentas/` mantido, para não quebrar links).

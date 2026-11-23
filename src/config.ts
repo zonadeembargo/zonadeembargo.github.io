@@ -30,7 +30,7 @@ export const SITE = {
 export const SECOES = {
   inicio:        { rotulo: 'TERMINAL',     sub: 'Início',               href: '',               mascote: 'apresentador' },
   textos:        { rotulo: 'TRANSMISSÕES', sub: 'Textos',               href: 'textos/',        mascote: 'leitor' },
-  ferramentas:   { rotulo: 'ARSENAL',      sub: 'Ferramentas',          href: 'ferramentas/',   mascote: 'pesquisador' },
+  ferramentas:   { rotulo: 'PAIOL',        sub: 'Ferramentas',          href: 'ferramentas/',   mascote: 'pesquisador' },
   sobre:         { rotulo: 'DOSSIÊ',       sub: 'Sobre',                href: 'sobre/',         mascote: 'tutor' },
   manifesto:     { rotulo: 'MANIFESTO',    sub: 'Princípios',           href: 'manifesto/',     mascote: 'escritor' },
   busca:         { rotulo: 'VARREDURA',    sub: 'Busca',                href: 'busca/',         mascote: 'pesquisador' },

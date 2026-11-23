@@ -41,7 +41,7 @@ site/
 ├── tsconfig.json                  configuração do TypeScript (usada pelo astro check)
 ├── public/                        copiado sem alteração para dist/
 │   ├── mascote/                   8 poses (400/800 px, WebP com transparência) + avatar
-│   ├── downloads/                 arquivos baixáveis do ARSENAL
+│   ├── downloads/                 arquivos baixáveis do PAIOL
 │   └── img/og.jpg, logo.svg, favicon.svg
 ├── scripts/
 │   ├── novo.mjs                   cria texto novo
@@ -52,7 +52,7 @@ site/
 │   ├── content/                   ★ CONTEÚDO (o que você edita no dia a dia)
 │   │   ├── textos/                publicações do blog
 │   │   ├── paginas/               sobre, manifesto, licencas (cada .md vira /<nome>/)
-│   │   ├── ferramentas/           itens do ARSENAL
+│   │   ├── ferramentas/           itens do PAIOL
 │   │   └── institucional/         links restritos do COFRE
 │   ├── assets/                    imagens otimizadas pelo Astro (hero, capas, imagens de texto)
 │   ├── layouts/Base.astro         <head> (SEO, Open Graph, JSON-LD), cabeçalho, rodapé
