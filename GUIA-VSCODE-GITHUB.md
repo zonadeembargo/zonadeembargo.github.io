@@ -18,7 +18,7 @@ O VS Code pode ser instalado pelo gerenciador de programas (Pamac: procure "Visu
 
 ### A2. Abrir o projeto
 
-1. Descompacte `site-pessoal.zip`. Surge a pasta `site`.
+1. A pasta do projeto é `site/` (dentro de `zona-de-embargo-v2/`). Em outro computador, baixe-a com `git clone https://github.com/zonadeembargo/zonadeembargo.github.io.git site`.
 2. No VS Code: **File → Open Folder…** e escolha a pasta `site`. Se perguntar "Do you trust the authors?", clique em *Yes*.
 3. Extensões recomendadas (ícone de quadradinhos na barra lateral, ou `Ctrl+Shift+X`):
    - **Astro** (publicada por *astro-build*): realça o código do site.
@@ -55,6 +55,8 @@ npm run preview    # mostra essa versão em http://localhost:4321/
 Se `build` terminar com "Complete!" e sem erros, o GitHub também conseguirá publicar.
 
 ## B. Subir para o GitHub
+
+> **Já feito em 2026-11-23.** O site está em <https://zonadeembargo.github.io/> e a pasta `site/` já está ligada ao GitHub (`git remote -v` mostra `origin`). No dia a dia, pule para a parte **C**. Os passos de B ficam como registro, caso seja preciso refazer em outro lugar.
 
 ### B1. Antes de subir
 

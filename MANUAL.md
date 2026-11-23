@@ -27,9 +27,20 @@ Este manual cobre tudo, da primeira publicação à rotina de atualização. Foi
 
 Arquivos cujo nome começa com `_` (como `_modelo.md`) **não aparecem no site**: servem de modelo para copiar.
 
-## 3. Primeira publicação (uma vez só)
+## 3. Publicação
 
-> Passo a passo ilustrado com o VS Code (ver o site no computador e enviar ao GitHub): **`GUIA-VSCODE-GITHUB.md`**. Esta seção resume o lado do GitHub.
+**Situação atual (feita em 2026-11-23):**
+
+| O quê | Onde |
+|---|---|
+| Site no ar | <https://zonadeembargo.github.io/> |
+| Repositório (código e textos) | <https://github.com/zonadeembargo/zonadeembargo.github.io> (organização `zonadeembargo`, público) |
+| Publicações e erros | <https://github.com/zonadeembargo/zonadeembargo.github.io/actions> |
+| E-mail dos commits | o privado do GitHub (`…@users.noreply.github.com`), configurado na pasta `site/` |
+
+Não é preciso repetir nada desta seção: **cada envio para o ramo `main` publica sozinho** (seção 4 e 6). Os passos abaixo ficam como registro, caso o site precise ser recriado em outro lugar.
+
+> Passo a passo ilustrado com o VS Code: **`GUIA-VSCODE-GITHUB.md`**.
 
 1. Crie uma conta em github.com e um **repositório novo** (botão *New*). Pode ser público. **Caminho adotado:** organização `zonadeembargo` com o repositório `zonadeembargo.github.io` → site em `https://zonadeembargo.github.io/` (passo a passo em `GUIA-VSCODE-GITHUB.md`, B3).
    - Para o endereço `https://SEU-USUARIO.github.io/`, o repositório deve se chamar exatamente `SEU-USUARIO.github.io`.
@@ -229,12 +240,10 @@ No início de `src/styles/global.css`, o bloco `:root` guarda as cores (`--ciano
 | `img/og.jpg` | Prévia ao compartilhar o link | 1200×630, JPG |
 | `emblema-120.webp` / `emblema-240.webp` | Emblema do cabeçalho (versão normal e para telas densas), fundo transparente | 120 e 240 px, WebP |
 | `favicon-32.png` / `apple-touch-icon.png` | Ícone da aba e do atalho no celular | 32 e 180 px |
-
-O emblema original em alta resolução fica em `docs/identidade/emblema-original.webp`; os logos anteriores ficam na mesma pasta, só como registro.
 | `mascote/avatar.webp` | Foto da lateral | 512×512, WebP |
 | `mascote/mascote-*-400.webp` e `-800.webp` | Poses do mascote (seções, cards, 404, fim de texto) | altura 400 e 800 px. Se mudar as proporções, atualize `MASCOTES` em `config.ts` |
 
-Basta substituir o arquivo mantendo o **mesmo nome**.
+Basta substituir o arquivo mantendo o **mesmo nome**. O emblema original em alta resolução fica em `docs/identidade/emblema-original.webp`; os logos anteriores ficam na mesma pasta, só como registro.
 
 ### Licenças adotadas
 
@@ -300,7 +309,8 @@ O resumo aparece no rodapé e a explicação completa em `/licencas/` (arquivo `
 
 ## 10. Checklist antes de divulgar o site
 
-- [ ] Definir o **nome do projeto** (`SITE.projeto`) e conferir `SITE.nome`.
+- [x] Definir o **nome do projeto** (`SITE.projeto` = "Zona de Embargo"; `SITE.nome` como assinatura).
+- [x] Publicar o site (<https://zonadeembargo.github.io/>).
 - [ ] Preencher `SITE.substack` e `SITE.apoio` (ou deixar vazios).
 - [ ] Reescrever **Sobre** e **Manifesto**; apagar os `exemplo-*.md` e a ferramenta de exemplo.
 - [ ] Preencher `SITE.apresentacao` e `SITE.canais` (ou deixar vazios).
@@ -312,7 +322,7 @@ O resumo aparece no rodapé e a explicação completa em `/licencas/` (arquivo `
 
 ## 11. Decisões que ficaram abertas
 
-1. **Nome do projeto** (provisório: "Zona de Embargo"). Alternativas: *Diário de Campo*, *Linha de Base*, *Carta de Campo*, *Território em Disputa*.
-2. **Nome da seção restrita** (hoje COFRE). Alternativas: *Acesso Restrito*, *Câmara*, *Intranet*.
+1. **Nome da seção restrita** (hoje COFRE). Alternativas: *Acesso Restrito*, *Câmara*, *Intranet*.
+2. **Medição do PageSpeed** no site publicado: <https://pagespeed.web.dev/analysis?url=https://zonadeembargo.github.io/>.
 
-Já decididos: licenças (seção 5) e site como versão canônica, com cópia no Substack (seção 4).
+Já decididos: nome **Zona de Embargo** com o nome do autor como assinatura; endereço pela organização `zonadeembargo`; licenças (seção 5); site como versão canônica, com cópia no Substack (seção 4).

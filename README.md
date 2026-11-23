@@ -12,6 +12,7 @@ Terminal de pesquisa eco-cyber-punk: textos em Markdown, ferramentas livres, man
 | `npm run verificar` | Checagem completa: tipos + build + busca + links internos (o mesmo que o GitHub roda) |
 | `npm run build` | Gera o site em `dist/` e o índice de busca em `dist/pagefind/` |
 | `npm run preview` | Serve o `dist/` localmente (com busca) |
+| `npm run manual` | Junta `MANUAL.md` e `GUIA-VSCODE-GITHUB.md` em `../MANUAL-DE-INSTRUCOES.html` (pasta do projeto, fora do repositório; abre offline e imprime em PDF) |
 
 Requer Node.js 22.12+.
 

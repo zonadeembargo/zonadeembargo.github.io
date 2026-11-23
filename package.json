@@ -10,7 +10,8 @@
     "check": "astro check",
     "links": "node scripts/verificar-links.mjs",
     "verificar": "astro check && npm run build && node scripts/verificar-links.mjs",
-    "novo": "node scripts/novo.mjs"
+    "novo": "node scripts/novo.mjs",
+    "manual": "node scripts/manual.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.10",

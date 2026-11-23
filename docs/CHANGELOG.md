@@ -47,3 +47,5 @@ Formato: data · versão · o que mudou. Detalhes de cada passo em `git log`.
 - Organização **zonadeembargo** no GitHub; repositório `zonadeembargo/zonadeembargo.github.io`; site no ar em <https://zonadeembargo.github.io/>.
 - Histórico regravado com o e-mail privado do GitHub (`…@users.noreply.github.com`) antes do primeiro envio.
 - GitHub Pages no modo "GitHub Actions": cada envio para `main` roda `npm run verificar` e só publica se passar (primeira publicação: ~45 s).
+- `npm run manual` (`scripts/manual.mjs`): manual de instruções consolidado em HTML na pasta do projeto, com sumário, caminhos desta máquina (só no arquivo gerado) e versão para impressão.
+- `MANUAL.md` e `GUIA-VSCODE-GITHUB.md` atualizados para o site já publicado; tabela de imagens fixas corrigida.
